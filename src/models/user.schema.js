@@ -30,13 +30,26 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
-console.log(config.JWT_SECRET);
+
 userSchema.methods = {
-  getJWTtoken: function () {
-    JWT.sign({ _id: this._id }, config.JWT_SECRET, {
-      expiresIn: config.JWT_EXPIRY,
+  comparePassword: async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+  },
+  getJwtToken: function () {
+    return JWT.sign({ id: this._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRY,
     });
   },
 };
+
+// userSchema.methods.comparePassword = async function (enteredPassword) {
+//   return await bcrypt.compare(enteredPassword, this.password);
+// };
+
+// userSchema.methods.getJwtToken = function () {
+//   return JWT.sign({ id: this._id }, process.env.JWT_SECRET, {
+//     expiresIn: process.env.JWT_EXPIRY,
+//   });
+// };
 
 export default mongoose.model("User", userSchema);
