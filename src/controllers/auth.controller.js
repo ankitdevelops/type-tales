@@ -77,7 +77,6 @@ export const login = asyncHandler(async (req, res) => {
   console.log(checkPassword);
   if (checkPassword) {
     const token = user.getJwtToken();
-    console.log(token);
     user.password = undefined;
     res.cookie("token", token, cookieOptions);
     return res.status(200).json({
