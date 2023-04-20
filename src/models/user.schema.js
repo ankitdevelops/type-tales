@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import JWT from "jsonwebtoken";
-import config from "../config";
+import config from "../config/index.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
@@ -30,7 +30,7 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
-
+console.log(config.JWT_SECRET);
 userSchema.methods = {
   getJWTtoken: function () {
     JWT.sign({ _id: this._id }, config.JWT_SECRET, {

@@ -1,7 +1,7 @@
-import User from "../models/user.schema";
-import asyncHandler from "../service/asyncHandler";
-import CustomError from "../utils/CustomError";
-import cookieOptions from "../utils/cookieOptions";
+import User from "../models/user.schema.js";
+import asyncHandler from "../service/asyncHandler.js";
+import CustomError from "../utils/CustomError.js";
+import cookieOptions from "../utils/cookieOptions.js";
 
 /******************************************************
  * @SIGNUP
@@ -10,7 +10,7 @@ import cookieOptions from "../utils/cookieOptions";
  * @returns User Object
  ******************************************************/
 
-export const singUp = asyncHandler(async (req, res) => {
+export const signUp = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name) {
