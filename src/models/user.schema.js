@@ -36,7 +36,7 @@ userSchema.methods = {
     return await bcrypt.compare(enteredPassword, this.password);
   },
   getJwtToken: function () {
-    return JWT.sign({ _id: this._id }, process.env.JWT_SECRET, {
+    return JWT.sign({ id: this._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRY,
     });
   },
