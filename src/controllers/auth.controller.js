@@ -11,7 +11,7 @@ import cookieOptions from "../utils/cookieOptions.js";
  ******************************************************/
 
 export const signUp = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, username, password2 } = req.body;
 
   if (!name) {
     throw new CustomError("Name is required", 400);
@@ -21,6 +21,15 @@ export const signUp = asyncHandler(async (req, res) => {
   }
   if (!password) {
     throw new CustomError("Name is required", 400);
+  }
+  if (!username) {
+    throw new CustomError("Username is required", 400);
+  }
+  if (!password2) {
+    throw new CustomError("Confirm Password is Required", 400);
+  }
+  if (password !== password2) {
+    throw new CustomError("Password don't match", 400);
   }
 
   const registeredUser = await User.findOne({ email });
@@ -32,14 +41,15 @@ export const signUp = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
+    username,
     password,
   });
 
-  const token = user.getJWTtoken();
+  const token = user.getJwtToken();
 
   user.password = undefined;
-
-  res.cookie("token", token, cookieOptions);
+  user.email = undefined;
+  // res.cookie("token", token, cookieOptions);
 
   res.status(200).json({
     success: true,

@@ -11,14 +11,20 @@ const userSchema = new mongoose.Schema(
       required: [true, "Name is required"],
       maxLength: [50, "Name must be less than 50"],
     },
+    username: {
+      type: String,
+      required: [true, "Username is required"],
+      unique: [true, "username not available"],
+    },
     email: {
       type: String,
       required: [true, "Email is required"],
+      unique: [true, "Email already registered"],
     },
     password: {
       type: String,
       required: [true, "Password is required"],
-      minLength: [18, "Password must be at lest 18 characters"],
+      minLength: [9, "Password must be at lest 9 characters"],
       select: false,
     },
   },
@@ -42,14 +48,14 @@ userSchema.methods = {
   },
 };
 
-// userSchema.methods.comparePassword = async function (enteredPassword) {
-//   return await bcrypt.compare(enteredPassword, this.password);
-// };
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
-// userSchema.methods.getJwtToken = function () {
-//   return JWT.sign({ id: this._id }, process.env.JWT_SECRET, {
-//     expiresIn: process.env.JWT_EXPIRY,
-//   });
-// };
+userSchema.methods.getJwtToken = function () {
+  return JWT.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRY,
+  });
+};
 
 export default mongoose.model("User", userSchema);

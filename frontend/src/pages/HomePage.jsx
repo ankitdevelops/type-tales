@@ -1,6 +1,6 @@
 import React from "react";
 import LeftPanel from "../components/LeftPanel";
-import MiddlePanel from "../components/MiddlePanel";
+import HomeFeed from "../components/HomeFeed";
 import RightPanel from "../components/RightPanel";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -11,12 +11,12 @@ const HomePage = () => {
   return (
     <>
       <div className="container mx-auto px-4 my-4 ">
-        <div className="grid md:grid-cols-12 gap-4 mx-auto h-[87vh] overflow-hidden">
+        <div className="grid md:grid-cols-12 gap-4 mx-auto ">
           <LeftPanel />
-          <MiddlePanel />
+          <HomeFeed />
           <RightPanel />
         </div>
-        <FloatingMenu />
+        {/* <FloatingMenu /> */}
       </div>
     </>
   );

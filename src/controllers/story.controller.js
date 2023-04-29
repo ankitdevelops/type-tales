@@ -4,7 +4,7 @@ import CustomError from "../utils/CustomError.js";
 
 export const createStory = asyncHandler(async (req, res) => {
   const { story } = req.body;
-  const user = req.user._id;
+  const user = req.user;
 
   if (!story) {
     throw new CustomError("Empty Store", 400);
@@ -12,7 +12,7 @@ export const createStory = asyncHandler(async (req, res) => {
   if (!user) {
     throw new CustomError("Invalid Request", 400);
   }
-  const newStory = await Story.create({ story, user });
+  const newStory = await Story.create({ story, author: user });
   res.status(201).json({
     success: true,
     message: "Story Posted Successfully",
