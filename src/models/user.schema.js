@@ -27,6 +27,8 @@ const userSchema = new mongoose.Schema(
       minLength: [9, "Password must be at lest 9 characters"],
       select: false,
     },
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

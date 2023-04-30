@@ -5,6 +5,6 @@ import storyReducer from "../features/story/storySlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    story: storyReducer,
+    stories: storyReducer,
   },
 });

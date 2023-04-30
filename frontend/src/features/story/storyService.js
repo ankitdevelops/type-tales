@@ -11,7 +11,7 @@ const createStory = async (story, token) => {
   };
 
   const response = await axios.post(
-    `${API_URL}create/`,
+    `${API_URL}create`,
     {
       story,
     },
@@ -21,8 +21,22 @@ const createStory = async (story, token) => {
   return response.data;
 };
 
+// get All Story
+
+const getAllStory = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(`${API_URL}stories`, config);
+  return response.data.stories;
+};
+
 const storyService = {
   createStory,
+  getAllStory,
 };
 
 export default storyService;
