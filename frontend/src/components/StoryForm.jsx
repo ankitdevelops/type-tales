@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createStory } from "../features/story/storySlice";
-
+import { toast } from "react-toastify";
 const StoryForm = () => {
   const [content, setContent] = useState("");
   const length = content.length;
@@ -18,7 +18,7 @@ const StoryForm = () => {
       .then(() => {
         setContent("");
         navigate("/");
-        console.log("Story Created Successfully");
+        toast.success("Post Created Successfully");
       })
       .catch((error) => {
         console.log("Error", error);

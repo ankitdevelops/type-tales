@@ -36,8 +36,10 @@ export const getAllStory = asyncHandler(async (_req, res) => {
   console.log("request received");
   const stories = await Story.find(
     {},
-    { story: 1, likes: 1, comments: 1 }
-  ).populate("author", "username name -_id");
+    { story: 1, likes: 1, comments: 1, createdAt: 1, updatedAt: 1 }
+  )
+    .populate("author", "username name -_id")
+    .sort({ createdAt: -1 });
 
   if (!stories) {
     throw new CustomError("No Story Found", 404);

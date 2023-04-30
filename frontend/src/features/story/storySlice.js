@@ -4,6 +4,7 @@ import storyService from "./storyService";
 const initialState = {
   stories: [],
   newStory: null,
+  story: null,
   isLoading: true,
 };
 
@@ -36,9 +37,28 @@ export const getAllStory = createAsyncThunk(
   }
 );
 
+export const getSingleStory = createAsyncThunk(
+  "story/getSingleStory",
+  async (storyId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await storyService.getSingleStory(token, storyId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message || error.toString()
+      );
+    }
+  }
+);
+
 export const storySlice = createSlice({
   name: "story",
   initialState,
+  reducers: {
+    clearStory: (state) => {
+      state.story = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createStory.fulfilled, (state, action) => {
@@ -61,8 +81,17 @@ export const storySlice = createSlice({
       })
       .addCase(getAllStory.rejected, (state) => {
         state.isLoading = true;
+      })
+      .addCase(getSingleStory.fulfilled, (state, action) => {
+        state.story = action.payload;
+      })
+      .addCase(getSingleStory.rejected, (state) => {
+        state.story = null;
+      })
+      .addCase(getSingleStory.pending, (state) => {
+        state.story = null;
       });
   },
 });
-
+export const { clearStory } = storySlice.actions;
 export default storySlice.reducer;
