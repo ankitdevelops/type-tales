@@ -1,7 +1,9 @@
 import Story from "../models/story.schema.js";
 import asyncHandler from "../service/asyncHandler.js";
 import CustomError from "../utils/CustomError.js";
+import Stroy from "../models/story.schema.js";
 
+// Create Story
 export const createStory = asyncHandler(async (req, res) => {
   const { story } = req.body;
   const user = req.user;
@@ -17,5 +19,56 @@ export const createStory = asyncHandler(async (req, res) => {
     success: true,
     message: "Story Posted Successfully",
     newStory,
+  });
+});
+
+// Get All Stories
+export const getAllStory = asyncHandler(async (req, res) => {
+  const stories = await Story.find({}, { story: 1 }).populate(
+    "author",
+    "username name -_id"
+  );
+
+  if (!stories) {
+    throw new CustomError("No Story Found", 404);
+  }
+
+  res.status(200).json({
+    success: true,
+    story,
+  });
+});
+
+// Get Stories of Currently LoggedIn User
+export const getUserStory = asyncHandler(async (req, res) => {
+  const user = req.user;
+  console.log(user);
+  const stories = await Story.find({ author: user._id })
+    .select({ story: 1 })
+    .populate("author", "username name -_id");
+
+  if (!stories) {
+    throw new CustomError("No Stories Found", 404);
+  }
+
+  res.status(200).json({
+    success: true,
+    stories,
+  });
+});
+
+// Get Single Story
+
+export const getStoryDetails = asyncHandler(async (req, res) => {
+  const { id: storyId } = req.params;
+  const story = await Story.findById(storyId).populate("author", "-_id");
+
+  if (!story) {
+    throw new CustomError("No Story Found", 404);
+  }
+
+  res.status(200).json({
+    success: true,
+    story,
   });
 });

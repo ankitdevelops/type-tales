@@ -8,10 +8,9 @@ const initialState = {
 
 export const createStory = createAsyncThunk(
   "story/create",
-  async ({ story }, thunkAPI) => {
+  async (story, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      console.log(token);
       return await storyService.createStory(story, token);
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -27,7 +26,7 @@ export const storySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createStory.fulfilled, (state, action) => {
-        state.story.push(action.payload);
+        state.story = action.payload;
       })
       .addCase(createStory.pending, (state) => {
         state.isLoading = true;

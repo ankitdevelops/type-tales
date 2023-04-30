@@ -15,7 +15,7 @@ const StoryForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createStory({ content }))
+    dispatch(createStory(content))
       .unwrap()
       .then(() => {
         navigate("/my-feed");
