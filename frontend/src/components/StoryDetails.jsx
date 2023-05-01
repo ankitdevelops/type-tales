@@ -72,7 +72,7 @@ const StoryDetails = () => {
                   </div>
                 </address>
               </header>
-              <p className="lead">{story?.story?.story}</p>
+              <p className="lead text-xl break-keep ">{story?.story?.story}</p>
             </article>
           </div>
           <Comments />

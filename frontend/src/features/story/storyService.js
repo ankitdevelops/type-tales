@@ -45,10 +45,22 @@ const getSingleStory = async (token, storyID) => {
   return response.data;
 };
 
+const getMyStory = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(`${API_URL}my-story`, config);
+  return response.data;
+};
+
 const storyService = {
   createStory,
   getAllStory,
   getSingleStory,
+  getMyStory,
 };
 
 export default storyService;

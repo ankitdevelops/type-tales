@@ -35,7 +35,7 @@ export const createStory = asyncHandler(async (req, res) => {
 export const getAllStory = asyncHandler(async (_req, res) => {
   console.log("request received");
   const stories = await Story.find(
-    {},
+    { isActive: true },
     { story: 1, likes: 1, comments: 1, createdAt: 1, updatedAt: 1 }
   )
     .populate("author", "username name -_id")
@@ -54,10 +54,10 @@ export const getAllStory = asyncHandler(async (_req, res) => {
 
 export const getUserStory = asyncHandler(async (req, res) => {
   const user = req.user;
-  console.log(user);
-  const stories = await Story.find({ author: user._id })
-    .select({ story: 1 })
-    .populate("author", "username name -_id");
+  const stories = await Story.find({ author: user._id, isActive: true })
+    .select({ story: 1, likes: 1, comments: 1, createdAt: 1, updatedAt: 1 })
+    .populate("author", "username name -_id")
+    .sort({ createdAt: -1 });
 
   if (!stories) {
     throw new CustomError("No Stories Found", 404);
@@ -73,7 +73,9 @@ export const getUserStory = asyncHandler(async (req, res) => {
 
 export const getStoryDetails = asyncHandler(async (req, res) => {
   const { id: storyId } = req.params;
-  const story = await Story.findById(storyId).populate("author", "-_id");
+  const story = await Story.findById(storyId)
+    .populate("author", "-_id")
+    .where({ isActive: true });
 
   if (!story) {
     throw new CustomError("No Story Found", 404);
