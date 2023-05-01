@@ -17,7 +17,7 @@ const StoryForm = () => {
       .unwrap()
       .then(() => {
         setContent("");
-        navigate("/");
+        navigate(`/`);
         toast.success("Post Created Successfully");
       })
       .catch((error) => {

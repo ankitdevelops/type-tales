@@ -16,7 +16,6 @@ const MyStroy = () => {
     };
   }, [dispatch]);
 
-  console.log(stories);
   if (stories.length === 0) {
     return (
       <div className="md:col-span-6 mt-5 middle mx-auto">

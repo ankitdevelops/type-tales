@@ -75,6 +75,9 @@ export const storySlice = createSlice({
     clearStories: (state) => {
       state.stories = [];
     },
+    clearNewStory: (state) => {
+      state.newStory = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -84,10 +87,12 @@ export const storySlice = createSlice({
       })
       .addCase(createStory.pending, (state) => {
         state.isLoading = true;
+        state.newStory = null;
         // state.story = ;
       })
       .addCase(createStory.rejected, (state) => {
         state.isLoading = true;
+        state.newStory = null;
         // state.story = null;
       })
       .addCase(getAllStory.fulfilled, (state, action) => {
@@ -113,5 +118,5 @@ export const storySlice = createSlice({
       });
   },
 });
-export const { clearStory, clearStories } = storySlice.actions;
+export const { clearStory, clearStories, clearNewStory } = storySlice.actions;
 export default storySlice.reducer;

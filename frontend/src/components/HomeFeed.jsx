@@ -24,12 +24,14 @@ const HomeFeed = () => {
 
   if (stories.length === 0) {
     return (
-      <div className="md:col-span-6 mt-5 middle mx-auto">
+      <div className="md:col-span-6 overflow-y-auto middle">
+        <StoryForm />
         <MoonLoader
           color="#fff"
           size={100}
           aria-label="Loading Spinner"
           data-testid="loader"
+          className="mt-5 mx-auto"
         />
       </div>
     );
@@ -38,16 +40,8 @@ const HomeFeed = () => {
   return (
     <div className="md:col-span-6 overflow-y-auto middle">
       <Tabs />
-      {location.pathname === "/my-feed" ? (
-        <>
-          <StoryList />
-        </>
-      ) : (
-        <>
-          <StoryForm />
-          <StoryList stories={stories} />
-        </>
-      )}
+      <StoryForm />
+      <StoryList stories={stories} />
     </div>
   );
 };

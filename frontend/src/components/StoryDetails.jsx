@@ -50,7 +50,7 @@ const StoryDetails = () => {
                     />
                     <div>
                       <Link
-                        to="sd"
+                        to="/user"
                         rel="author"
                         className="text-xl font-bold text-gray-900 dark:text-white capitalize"
                       >

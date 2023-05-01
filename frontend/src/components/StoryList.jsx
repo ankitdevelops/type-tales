@@ -2,7 +2,6 @@ import React from "react";
 import StoryItem from "./StoryItem";
 
 const StoryList = ({ stories }) => {
-  console.log("first", Array.isArray(stories));
   return (
     <>
       {stories &&

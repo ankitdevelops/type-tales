@@ -4,6 +4,8 @@ import { FaUserAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
+
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -46,7 +48,7 @@ const RegisterPage = () => {
       .unwrap()
       .then((user) => {
         console.log(user);
-        console.log(`Registered new User ${user.user.name}`);
+        toast.success(`${user.user.name}, Account Created Successfully`);
         navigate("/");
       })
       .catch(console.log(console.log("error")));

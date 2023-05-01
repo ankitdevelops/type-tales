@@ -3,7 +3,7 @@ import { FaHouseUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../features/auth/authSlice";
-
+import { toast } from "react-toastify";
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -43,7 +43,7 @@ const LoginPage = () => {
     dispatch(loginUser(userData))
       .unwrap()
       .then((user) => {
-        console.log(`Logged in as ${user.user.name}`);
+        toast.success(`Welcome Back ${user.user.name}`);
         navigate("/");
       })
       .catch((error) => {
