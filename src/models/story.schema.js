@@ -23,21 +23,22 @@ const storySchema = new mongoose.Schema(
       },
     ],
     comments: [
-      {
-        author: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        content: {
-          type: String,
-          required: true,
-        },
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
-      },
+      { type: mongoose.Schema.Types.ObjectId, ref: "Comment" },
+      // {
+      //   author: {
+      //     type: mongoose.Schema.Types.ObjectId,
+      //     ref: "User",
+      //     required: true,
+      //   },
+      //   content: {
+      //     type: String,
+      //     required: true,
+      //   },
+      //   createdAt: {
+      //     type: Date,
+      //     default: Date.now,
+      //   },
+      // },
     ],
   },
   { timestamps: true }

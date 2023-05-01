@@ -17,6 +17,7 @@ const StoryDetails = () => {
       .catch((error) => {
         toast.error(error.message);
       });
+
     return () => {
       dispatch(clearStory());
     };
@@ -75,7 +76,7 @@ const StoryDetails = () => {
               <p className="lead text-xl break-keep ">{story?.story?.story}</p>
             </article>
           </div>
-          <Comments />
+          <Comments id={id} />
         </div>
       </div>
     </div>
