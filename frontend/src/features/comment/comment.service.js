@@ -12,15 +12,15 @@ const getStoryComments = async (token, storyID) => {
   return response.data;
 };
 
-const createComment = async (token, data) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.post(`${API_URL}addComment`, data, config);
-  return response.data;
-};
+// const createComment = async (token, data) => {
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
+//   const response = await axios.post(`${API_URL}addComment`, data, config);
+//   return response.data;
+// };
 
 const addCommentReply = async (token, data) => {
   const config = {
@@ -36,10 +36,21 @@ const addCommentReply = async (token, data) => {
   return response.data;
 };
 
+const getCommentByID = async (token, commentID) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(`${API_URL}comment/${commentID}`, config);
+  return response.data;
+};
+
 const commentService = {
   getStoryComments,
-  createComment,
+  // createComment,
   addCommentReply,
+  getCommentByID,
 };
 
 export default commentService;

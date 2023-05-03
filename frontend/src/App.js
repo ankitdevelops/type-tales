@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage";
 import StoryDetailsPage from "./pages/StoryDetailsPage";
 import MyStroy from "./components/MyStroy";
 import FollowingFeed from "./components/FollowingFeed";
+import CommentDetailsPage from "./pages/CommentDetailsPage";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
           <Route path="/my-feed" element={<HomePage />} />
           <Route path="/my-story" element={<HomePage />} />
           <Route path="/story/:id" element={<StoryDetailsPage />} />
+          <Route
+            path="/story/:storyID/comment/:commentID"
+            element={<CommentDetailsPage />}
+          />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -2,22 +2,11 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
-import { useSelector, useDispatch } from "react-redux";
-import { getStoryComments } from "../features/comment/comment.slice";
-import { toast } from "react-toastify";
-const Comments = ({ id }) => {
-  const dispatch = useDispatch();
-  const { comments } = useSelector((state) => state.comments);
+import { useSelector } from "react-redux";
 
-  useEffect(() => {
-    dispatch(getStoryComments(id))
-      .unwrap()
-      .then(() => {})
-      .catch((error) => {
-        toast.error(error.message);
-      });
-    dispatch(getStoryComments(id));
-  }, [id, dispatch]);
+const Comments = ({ id, comments }) => {
+  const { story } = useSelector((state) => state.stories);
+  // const comments = story.story?.comments;
 
   return (
     <section className=" bg-base-300 mt-10">

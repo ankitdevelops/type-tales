@@ -65,6 +65,21 @@ export const getMyStory = createAsyncThunk(
   }
 );
 
+export const createComment = createAsyncThunk(
+  "comment/createComment",
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      console.log(data);
+      return await storyService.createComment(token, data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message || error.toString()
+      );
+    }
+  }
+);
+
 export const storySlice = createSlice({
   name: "story",
   initialState,
@@ -115,6 +130,9 @@ export const storySlice = createSlice({
       })
       .addCase(getMyStory.fulfilled, (state, action) => {
         state.stories = action.payload.stories;
+      })
+      .addCase(createComment.fulfilled, (state, action) => {
+        state.story.story.comments.unshift(action.payload);
       });
   },
 });

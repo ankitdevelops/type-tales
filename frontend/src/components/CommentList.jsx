@@ -7,19 +7,7 @@ const CommentList = ({ comments, storyID }) => {
     <>
       {comments &&
         comments.map((comment, index) => (
-          <div key={index}>
-            <CommentItem comment={comment} key={index} storyID={storyID} />
-            <ul>
-              {comment.replies.map((reply, index) => (
-                <CommentItem
-                  comment={reply}
-                  isReply={true}
-                  key={index}
-                  storyID={storyID}
-                />
-              ))}
-            </ul>
-          </div>
+          <CommentItem comment={comment} key={index} storyID={storyID} />
         ))}
     </>
   );

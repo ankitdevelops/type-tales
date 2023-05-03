@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  createComment,
-  addCommentReply,
-} from "../features/comment/comment.slice";
+import { createComment } from "../features/story/storySlice";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
@@ -15,22 +12,22 @@ const CommentForm = ({ storyID, isReply, commentId }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (isReply && content !== "" && storyID) {
-      const data = {
-        content,
-        commentId,
-      };
-      dispatch(addCommentReply(data))
-        .unwrap()
-        .then(() => {
-          setContent("");
-          navigate(`/story/${storyID}`);
-          toast.success("Comment Created Successfully");
-        })
-        .catch((error) => {
-          console.log("Error", error);
-        });
-    }
+    // if (isReply && content !== "" && storyID) {
+    //   const data = {
+    //     content,
+    //     commentId,
+    //   };
+    //   dispatch(addCommentReply(data))
+    //     .unwrap()
+    //     .then(() => {
+    //       setContent("");
+    //       navigate(`/story/${storyID}`);
+    //       toast.success("Comment Created Successfully");
+    //     })
+    //     .catch((error) => {
+    //       console.log("Error", error);
+    //     });
+    // }
 
     if (content !== "" && storyID) {
       const data = {

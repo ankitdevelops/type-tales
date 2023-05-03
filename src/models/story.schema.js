@@ -23,7 +23,6 @@ const storySchema = new mongoose.Schema(
       },
     ],
     comments: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Comment" },
       // {
       //   author: {
       //     type: mongoose.Schema.Types.ObjectId,
