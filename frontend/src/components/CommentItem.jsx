@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { FaRegComment } from "react-icons/fa";
-import CommentForm from "./CommentForm";
-const CommentItem = ({ comment, isReply, storyID }) => {
-  const [showForm, setShowForm] = useState(false);
-  // const commentId = comment._id;
-  console.log(comment);
+
+const CommentItem = ({ comment, storyID }) => {
   return (
-    <Link to={`/story/${storyID}/comment/${comment?._id}`}>
+    <Link to={`/story/${storyID}/comment/${comment?._id}`} id="RouterNavLink">
       <article className={"card card-body  bg-base-100 p-6 mb-6 text-base "}>
         <footer className="flex justify-between items-center mb-2">
           <div className="flex items-center">
@@ -45,12 +41,8 @@ const CommentItem = ({ comment, isReply, storyID }) => {
               tabIndex={0}
               className="dropdown-content menu p-2 shadow bg-base-300 rounded-box w-52"
             >
-              <li>
-                <Link>Item 1</Link>
-              </li>
-              <li>
-                <Link>Item 2</Link>
-              </li>
+              <li>Item 1</li>
+              <li>Item 2</li>
             </ul>
           </div>
         </footer>

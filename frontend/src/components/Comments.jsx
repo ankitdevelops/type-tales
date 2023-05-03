@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
-import { useSelector } from "react-redux";
-
+// import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 const Comments = ({ id, comments }) => {
-  const { story } = useSelector((state) => state.stories);
-  // const comments = story.story?.comments;
+  // const { story } = useSelector((state) => state.stories);
+  const { commentID } = useParams();
 
   return (
     <section className=" bg-base-300 mt-10">
@@ -16,7 +15,11 @@ const Comments = ({ id, comments }) => {
             Discussion ({comments?.length})
           </h2>
         </div>
-        <CommentForm storyID={id} />
+        <CommentForm
+          storyID={id}
+          commentID={commentID}
+          isReply={commentID ? true : false}
+        />
         <CommentList comments={comments} storyID={id} />
       </div>
     </section>

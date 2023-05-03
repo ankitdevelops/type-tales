@@ -6,7 +6,7 @@ import {
   getStoryDetails,
   addComment,
   addReply,
-  getStoryComments,
+  // getStoryComments,
   getCommentById,
 } from "../controllers/story.controller.js";
 import { isLoggedIn } from "../middleware/auth.middleware.js";

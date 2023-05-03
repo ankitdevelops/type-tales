@@ -128,10 +128,10 @@ export const addComment = asyncHandler(async (req, res) => {
 
 export const addReply = asyncHandler(async (req, res) => {
   console.log("reply request received");
-  const { commentId, content, storyID } = req.body;
+  const { commentID, content } = req.body;
   const user = req.user;
 
-  if (!commentId) {
+  if (!commentID) {
     throw new CustomError("commentId is Required", 400);
   }
   if (!content) {
@@ -141,51 +141,36 @@ export const addReply = asyncHandler(async (req, res) => {
     throw new CustomError("Unauthorized", 400);
   }
 
-  const parentComment = await Comment.findById(commentId);
+  const parentComment = await Comment.findById(commentID);
   if (!parentComment) {
     return res.status(400).json({ message: "Parent comment not found" });
   }
 
-  const newComment = new Comment({
+  const newReply = new Comment({
     content,
     author: user,
-    story: parentComment.story,
-    comments: [],
   });
 
-  const savedComment = await newComment.save();
+  const savedComment = await newReply.save();
 
   // Add the new comment to the parent comment's list of comments
   parentComment.comments.push(savedComment._id);
   await parentComment.save();
 
+  const replayResponse = {
+    _id: savedComment._id,
+    content: savedComment.content,
+    author: {
+      name: savedComment.author.name,
+      username: savedComment.author.username,
+    },
+    createdAt: savedComment.createdAt,
+    updatedAt: savedComment.updatedAt,
+    comments: savedComment.comments,
+  };
+
   // Return the saved comment with status code 201
-  return res.status(201).json(savedComment);
-});
-
-// get Comments of a story
-
-export const getStoryComments = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const user = req.user;
-
-  if (!id) {
-    throw new CustomError("No StoryId Found", 400);
-  }
-  if (!user) {
-    throw new CustomError("unauthenticated Request", 401);
-  }
-  const comments = await Comment.find({ story: id })
-    .populate("author", "name")
-    .populate({
-      path: "comments",
-      populate: {
-        path: "author",
-        select: "name",
-      },
-    });
-
-  return res.status(200).json(comments);
+  return res.status(201).json(replayResponse);
 });
 
 // get Comment By ID
@@ -194,12 +179,12 @@ export const getCommentById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = req.user;
   const comment = await Comment.findById(req.params.id)
-    .populate("author", "name") // populate the author field with their name
+    .populate("author", "name username") // populate the author field with their name
     .populate({
       path: "comments",
       populate: {
         path: "author",
-        select: "name",
+        select: "name username",
       },
     });
 

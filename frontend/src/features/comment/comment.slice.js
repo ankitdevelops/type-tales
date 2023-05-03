@@ -4,6 +4,7 @@ import commentService from "./comment.service";
 const initialState = {
   comments: [],
   comment: null,
+  newReply: null,
 };
 
 export const getStoryComments = createAsyncThunk(
@@ -72,11 +73,8 @@ export const commentSlice = createSlice({
       .addCase(getStoryComments.fulfilled, (state, action) => {
         state.comments = action.payload;
       })
-      // .addCase(createComment.fulfilled, (state, action) => {
-      //   state.stories.story.story.comments.unshift(action.payload.newComment);
-      // })
       .addCase(addCommentReply.fulfilled, (state, action) => {
-        state.comments.replies.unshift(action.payload.newComment);
+        state.comment.comments.unshift(action.payload);
         console.log(action.payload);
       })
       .addCase(getCommentByID.fulfilled, (state, action) => {

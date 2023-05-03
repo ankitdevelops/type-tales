@@ -41,7 +41,10 @@ const CommentsDetails = () => {
       <div className="card w-full bg-base-300 shadow-xl my-4">
         <div className="card-body block">
           <div className="btn-group grid grid-cols-1">
-            <Link to="" className="btn  mb-5 flex items-center">
+            <Link
+              to={`/story/${storyID}`}
+              className="btn  mb-5 flex items-center"
+            >
               <FaHandPointLeft size={26} className="mr-3" />
               Back To Story
             </Link>

@@ -8,15 +8,13 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import RegisterPage from "./pages/RegisterPage";
 import StoryDetailsPage from "./pages/StoryDetailsPage";
-import MyStroy from "./components/MyStroy";
-import FollowingFeed from "./components/FollowingFeed";
 import CommentDetailsPage from "./pages/CommentDetailsPage";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <ToastContainer />
+        <ToastContainer position="top-center" theme="dark" />
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />

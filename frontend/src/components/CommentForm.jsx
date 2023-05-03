@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { createComment } from "../features/story/storySlice";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-
-const CommentForm = ({ storyID, isReply, commentId }) => {
+import { addCommentReply } from "../features/comment/comment.slice";
+const CommentForm = ({ storyID, isReply, commentID }) => {
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -12,24 +12,29 @@ const CommentForm = ({ storyID, isReply, commentId }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // if (isReply && content !== "" && storyID) {
-    //   const data = {
-    //     content,
-    //     commentId,
-    //   };
-    //   dispatch(addCommentReply(data))
-    //     .unwrap()
-    //     .then(() => {
-    //       setContent("");
-    //       navigate(`/story/${storyID}`);
-    //       toast.success("Comment Created Successfully");
-    //     })
-    //     .catch((error) => {
-    //       console.log("Error", error);
-    //     });
-    // }
+    if (isReply && content !== "" && commentID) {
+      const data = {
+        content,
+        commentID,
+      };
+      dispatch(addCommentReply(data))
+        .unwrap()
+        .then(() => {
+          setContent("");
+          navigate(`/story/${storyID}/comment/${commentID}`);
+          toast.success("Reply Added Successfully");
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    }
 
-    if (content !== "" && storyID) {
+    if (
+      content !== "" &&
+      storyID &&
+      isReply === false &&
+      commentID === undefined
+    ) {
       const data = {
         content,
         storyID,
