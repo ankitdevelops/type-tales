@@ -5,7 +5,7 @@
 <br />
 <div align="center">
 
-  <img width="100px" style="margin-right:12px" src="../type_tales/frontend/src/assets/logo.png" alt="Logo"/>
+  <img width="100px" style="margin-right:12px" src="./frontend/src/assets/logo.png" alt="Logo"/>
 
   <p align="center"> 
     A simple social media website where user can share stories in up to 500 characters.
@@ -55,6 +55,8 @@ A simple social media website where user can share stories in up to 500 characte
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Built With
+![javascript](https://img.shields.io/badge/javascript-3670A0?style=for-the-badge&logo=javascript&logoColor=ffdd54)
+
 ![ExpressJS](https://img.shields.io/badge/expressjs-3670A0?style=for-the-badge&logo=express&logoColor=ffdd54)
 
 ![NodeJs](https://img.shields.io/badge/nodejs-3670A0?style=for-the-badge&logo=node&logoColor=ffdd54)
@@ -68,8 +70,7 @@ A simple social media website where user can share stories in up to 500 characte
 ![TailwindCSS](https://img.shields.io/badge/tailwind-%23563D7C.svg?style=for-the-badge&logo=tailwindcss&logoColor=white)
 
 
-**_DB DESIGN_**
- <img src="./screenshots/devBlogs.png" alt="Logo">
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -81,47 +82,15 @@ To get a local copy up and running follow these steps.
 
 ### Prerequisites
 
-You need `NodeJs` and `Python` installed on your machine.
+You need `NodeJs`  installed on your machine.
 
 ### Installation
 
  Clone the repo
    ```sh
-   git clone https://github.com/ankitdevelops/devblogs.git
+   git clone https://github.com/ankitdevelops/type-tales.git
    ```
- **_Setting Up the Backend_**
-   ```sh
-   cd backend  
-   ```
-Create a virtual environment and install the dependencies
 
-```sh
-virtualenv env
-pip install -r requirements.txt
-
-# or only if using pipenv
-
-pipenv shell
-pipenv install
-```
-Start the Django Development Server
-
-```sh
-python manage.py collectstatic #only if needed
-python manage.py makemigrations #only if needed
-python manage.py migrate #only if needed
-python manage.py runserver
-```
- **_Setting Up the Frontend_**
-
- ```sh
- cd frontend
- ```
- Install dependencies from package.json and start the server
- ```sh
- npm install
- npm start 
- ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -144,6 +113,3 @@ Project Link: [https://django-devblogs.vercel.app/](https://django-devblogs.verc
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-**_Read more_**
-
-[![Dev.to blog](https://img.shields.io/badge/dev.to-0A0A0A?style=for-the-badge&logo=dev.to&logoColor=white)](https://dev.to/ankitdevelops/introducing-devblogs-22b6) 
