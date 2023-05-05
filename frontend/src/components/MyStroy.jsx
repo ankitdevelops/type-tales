@@ -6,7 +6,7 @@ import StoryList from "./StoryList";
 import MoonLoader from "react-spinners/MoonLoader";
 
 const MyStroy = () => {
-  const { stories } = useSelector((state) => state.stories);
+  const { stories, status } = useSelector((state) => state.stories);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const MyStroy = () => {
     };
   }, [dispatch]);
 
-  if (stories.length === 0) {
+  if (status === "pending") {
     return (
       <div className="md:col-span-6 mt-5 middle mx-auto">
         <MoonLoader
@@ -28,6 +28,16 @@ const MyStroy = () => {
       </div>
     );
   }
+
+  if (stories.length === 0) {
+    return (
+      <div className="md:col-span-6 overflow-y-auto middle">
+        <Tabs />
+        <p className="text-3xl text-center mt-10">No Stories Found</p>
+      </div>
+    );
+  }
+
   return (
     <div className="md:col-span-6 overflow-y-auto middle">
       <Tabs />

@@ -2,6 +2,7 @@ import User from "../models/user.schema.js";
 import asyncHandler from "../service/asyncHandler.js";
 import CustomError from "../utils/CustomError.js";
 import cookieOptions from "../utils/cookieOptions.js";
+import Story from "../models/story.schema.js";
 
 /******************************************************
  * @SIGNUP
@@ -236,4 +237,22 @@ export const unfollowUser = asyncHandler(async (req, res) => {
       name: userToUnfollow.name,
     },
   });
+});
+
+export const getPostsOfFollowing = asyncHandler(async (req, res) => {
+  const currentUser = req.user;
+
+  if (!currentUser) {
+    throw new CustomError("Invalid Request", 400);
+  }
+  const followingUserIds = currentUser.following.map((id) => id.toString());
+
+  const stories = await Story.find({
+    author: { $in: followingUserIds },
+    isActive: true,
+  })
+    .sort("-updatedAt")
+    .populate("author", "username name -_id");
+
+  res.status(200).json(stories);
 });

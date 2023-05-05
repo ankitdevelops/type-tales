@@ -5,7 +5,7 @@ const initialState = {
   stories: [],
   newStory: null,
   story: null,
-  isLoading: true,
+  status: "",
 };
 
 export const createStory = createAsyncThunk(
@@ -97,42 +97,67 @@ export const storySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createStory.fulfilled, (state, action) => {
+        state.status = "fulfilled";
         state.newStory = action.payload;
         state.stories.unshift(action.payload.newStory);
       })
       .addCase(createStory.pending, (state) => {
-        state.isLoading = true;
+        state.status = "pending";
+
         state.newStory = null;
         // state.story = ;
       })
       .addCase(createStory.rejected, (state) => {
-        state.isLoading = true;
+        state.status = "rejected";
+
         state.newStory = null;
         // state.story = null;
       })
       .addCase(getAllStory.fulfilled, (state, action) => {
+        state.status = "fulfilled";
         state.stories = action.payload;
       })
       .addCase(getAllStory.pending, (state) => {
-        state.isLoading = true;
+        state.status = "pending";
+        state.stories = [];
       })
       .addCase(getAllStory.rejected, (state) => {
-        state.isLoading = true;
+        state.status = "rejected";
+        state.stories = [];
       })
       .addCase(getSingleStory.fulfilled, (state, action) => {
         state.story = action.payload;
+        state.status = "fulfilled";
       })
       .addCase(getSingleStory.rejected, (state) => {
+        state.status = "rejected";
         state.story = null;
       })
       .addCase(getSingleStory.pending, (state) => {
+        state.status = "pending";
         state.story = null;
       })
       .addCase(getMyStory.fulfilled, (state, action) => {
+        state.status = "fulfilled";
         state.stories = action.payload.stories;
       })
+      .addCase(getMyStory.pending, (state, action) => {
+        state.status = "pending";
+        state.stories = [];
+      })
+      .addCase(getMyStory.rejected, (state, action) => {
+        state.status = "rejected";
+        state.stories = [];
+      })
       .addCase(createComment.fulfilled, (state, action) => {
+        state.status = "fulfilled";
         state.story.story.comments.unshift(action.payload);
+      })
+      .addCase(createComment.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(createComment.rejected, (state, action) => {
+        state.status = "rejected";
       });
   },
 });

@@ -90,6 +90,19 @@ const unFollowUser = async (username, token) => {
   }
 };
 
+const getFollowingFeed = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(`${API_URL}following/stories`, config);
+
+  if (response.data) {
+    return response.data;
+  }
+};
+
 const authService = {
   registerUser,
   loginUser,
@@ -98,6 +111,7 @@ const authService = {
   getUserToFollow,
   followUser,
   unFollowUser,
+  getFollowingFeed,
 };
 
 export default authService;

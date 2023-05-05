@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import authService from "./authService";
-import produce from "immer";
 const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
@@ -8,6 +7,7 @@ const initialState = {
   following: [],
   userToFollow: [],
   status: "",
+  followingFeed: [],
 };
 
 export const registerUser = createAsyncThunk(
@@ -98,6 +98,20 @@ export const getUserToFollow = createAsyncThunk(
   }
 );
 
+export const getFollowingFeed = createAsyncThunk(
+  "auth/getFollowingFeed",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.getFollowingFeed(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message || error.toString()
+      );
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -145,8 +159,19 @@ export const authSlice = createSlice({
         state.following = state.following.filter(
           (user) => user.username !== action.payload.user.username
         );
-
         state.userToFollow.unshift(action.payload.user);
+      })
+      .addCase(getFollowingFeed.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.followingFeed = action.payload;
+      })
+      .addCase(getFollowingFeed.pending, (state, action) => {
+        state.status = "pending";
+        state.followingFeed = [];
+      })
+      .addCase(getFollowingFeed.rejected, (state, action) => {
+        state.status = "rejected";
+        state.followingFeed = [];
       });
   },
 });

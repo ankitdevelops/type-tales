@@ -12,7 +12,7 @@ import Tabs from "./Tabs";
 const HomeFeed = () => {
   const location = useLocation();
 
-  const { stories } = useSelector((state) => state.stories);
+  const { stories, status } = useSelector((state) => state.stories);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const HomeFeed = () => {
     };
   }, [dispatch]);
 
-  if (stories.length === 0) {
+  if (status === "pending") {
     return (
       <div className="md:col-span-6 overflow-y-auto middle">
         <StoryForm />
@@ -33,6 +33,14 @@ const HomeFeed = () => {
           data-testid="loader"
           className="mt-5 mx-auto"
         />
+      </div>
+    );
+  }
+  if (stories.length === 0) {
+    return (
+      <div className="md:col-span-6 overflow-y-auto middle">
+        <Tabs />
+        <p className="text-3xl text-center mt-10">No Stories Found</p>
       </div>
     );
   }
