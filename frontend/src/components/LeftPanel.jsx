@@ -39,7 +39,12 @@ const LeftPanel = () => {
               <h3 className="text-lg font-semibold">Following</h3>
               {following &&
                 following.map((user, index) => (
-                  <UserItem user={user} key={index} />
+                  <UserItem
+                    user={user}
+                    key={index}
+                    unFollow={true}
+                    follow={false}
+                  />
                 ))}
             </div>
           </div>

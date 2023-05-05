@@ -58,12 +58,46 @@ const getUserToFollow = async (token) => {
   }
 };
 
+// followUser
+
+const followUser = async (username, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.post(`${API_URL}follow/${username}`, {}, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+const unFollowUser = async (username, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.post(
+    `${API_URL}/unfollow/${username}`,
+    {},
+    config
+  );
+
+  if (response.data) {
+    return response.data;
+  }
+};
+
 const authService = {
   registerUser,
   loginUser,
   logout,
   getFollowingUsers,
   getUserToFollow,
+  followUser,
+  unFollowUser,
 };
 
 export default authService;

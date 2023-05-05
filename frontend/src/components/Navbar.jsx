@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FaSignOutAlt } from "react-icons/fa";
 import { logout } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import Logo from "../assets/logo.png";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ const Navbar = () => {
     <div className="bg-base-300">
       <div className="navbar container mx-auto  py-3">
         <div className="navbar-start">
-          <Link to={"/"} className="btn btn-ghost normal-case text-xl">
-            Type~Tales
+          <Link to={"/"} role="btn">
+            {/* Type~Tales */}
+            <img src={Logo} alt="brand-logo" className="w-20" />
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -38,7 +40,7 @@ const Navbar = () => {
         <div className="navbar-end ">
           {user ? (
             <>
-              <div className="form-control">
+              <div className="form-control hidden sm:block">
                 <div className="input-group">
                   <input
                     type="text"

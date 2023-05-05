@@ -187,6 +187,10 @@ export const followUser = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: `${currentUser.username} followed ${userToFollow.username}`,
+    user: {
+      username: userToFollow.username,
+      name: userToFollow.name,
+    },
   });
 });
 
@@ -227,5 +231,9 @@ export const unfollowUser = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: `${currentUser.username} unhallowed ${userToUnfollow.username}`,
+    user: {
+      username: userToUnfollow.username,
+      name: userToUnfollow.name,
+    },
   });
 });

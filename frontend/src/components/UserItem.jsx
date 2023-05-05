@@ -1,6 +1,37 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { followUser, unFollowUser } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
 
-const UserItem = ({ user }) => {
+const UserItem = ({ user, unFollow, follow }) => {
+  const { status } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const handelButtonClick = () => {
+    if (unFollow === false && follow === true) {
+      dispatch(followUser(user.username))
+        .unwrap()
+        .then((user) => {
+          toast.success(user.message);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error);
+        });
+    }
+    if (unFollow === true && follow === false) {
+      dispatch(unFollowUser(user.username))
+        .unwrap()
+        .then((user) => {
+          toast.success(user.message);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error);
+        });
+    }
+  };
+
   return (
     <div className="">
       <div className="flex justify-between mt-2 ">
@@ -21,7 +52,13 @@ const UserItem = ({ user }) => {
           </div>
         </div>
         <div className="">
-          <button className="btn">follow</button>
+          <button
+            className="btn capitalize"
+            onClick={handelButtonClick}
+            disabled={status === "pending"}
+          >
+            {unFollow ? "Unfollow" : "Follow"}
+          </button>
         </div>
       </div>
     </div>

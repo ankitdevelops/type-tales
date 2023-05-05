@@ -41,7 +41,12 @@ const RightPanel = () => {
           <h3 className="text-lg font-semibold">Who to follow</h3>
           {userToFollow &&
             userToFollow.map((user, index) => (
-              <UserItem user={user} key={index} />
+              <UserItem
+                user={user}
+                key={index}
+                unFollow={false}
+                follow={true}
+              />
             ))}
         </div>
       </div>
