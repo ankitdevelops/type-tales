@@ -20,8 +20,6 @@ const RegisterPage = () => {
 
   const { name, email, username, password, password2 } = formData;
 
-  const { isLoading } = useSelector((state) => state.auth);
-
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -32,34 +30,29 @@ const RegisterPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (password.length < 9) {
-      console.log("Password too short");
+      toast.error("Password too short");
     } else if (password !== password2) {
-      console.log("Password don't match");
-    }
-    const userData = {
-      name,
-      email,
-      username,
-      password,
-      password2,
-    };
+      toast.error("Password Don't Match");
+    } else {
+      const userData = {
+        name,
+        email,
+        username,
+        password,
+        password2,
+      };
 
-    dispatch(registerUser(userData))
-      .unwrap()
-      .then((user) => {
-        console.log(user);
-        toast.success(`${user.user.name}, Account Created Successfully`);
-        navigate("/");
-      })
-      .catch(console.log(console.log("error")));
+      dispatch(registerUser(userData))
+        .unwrap()
+        .then((user) => {
+          console.log(user);
+          toast.success(`${user.user.name}, Account Created Successfully`);
+          navigate("/");
+        })
+        .catch((error) => toast.error(error));
+    }
   };
-  // if (isLoading) {
-  //   return (
-  //     <div className="container mx-auto px-4">
-  //       <h1 className="text-7xl text-center">Loading...</h1>
-  //     </div>
-  //   );
-  // }
+
   return (
     <div className="container mx-auto px-4  h-[90vh] ">
       <div className="flex justify-center w-full flex-col   content-center h-full">
