@@ -24,12 +24,46 @@ const loginUser = async (userData) => {
   return response.data;
 };
 
+// Logout User
 const logout = () => localStorage.removeItem("user");
+
+// Following Users
+
+const getFollowingUsers = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(`${API_URL}/listFollowing`, config);
+
+  if (response.data) {
+    return response.data;
+  }
+};
+
+// User to Follow
+
+const getUserToFollow = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(`${API_URL}/list`, config);
+
+  if (response.data) {
+    return response.data;
+  }
+};
 
 const authService = {
   registerUser,
   loginUser,
   logout,
+  getFollowingUsers,
+  getUserToFollow,
 };
 
 export default authService;

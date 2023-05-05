@@ -5,7 +5,8 @@ const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
   user: user ? user : null,
-  isLoading: true,
+  following: [],
+  userToFollow: [],
 };
 
 export const registerUser = createAsyncThunk(
@@ -40,6 +41,34 @@ export const logout = createAction("auth/logout", () => {
   return {};
 });
 
+export const getFollowingUsers = createAsyncThunk(
+  "auth/getFollowingUsers",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.getFollowingUsers(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message || error.toString()
+      );
+    }
+  }
+);
+
+export const getUserToFollow = createAsyncThunk(
+  "auth/getUserToFollow",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.getUserToFollow(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message || error.toString()
+      );
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -50,25 +79,17 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(registerUser.rejected, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(loginUser.pending, (state) => {
-        state.isLoading = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.user = action.payload;
       })
-      .addCase(loginUser.rejected, (state) => {
-        state.isLoading = false;
+      .addCase(getFollowingUsers.fulfilled, (state, action) => {
+        state.following = action.payload;
+      })
+      .addCase(getUserToFollow.fulfilled, (state, action) => {
+        state.userToFollow = action.payload;
       });
   },
 });
