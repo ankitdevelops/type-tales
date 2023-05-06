@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,8 @@ import { registerUser } from "../features/auth/authSlice";
 import { toast } from "react-toastify";
 
 const RegisterPage = () => {
+  const { user } = useSelector((state) => state.auth);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -53,6 +55,9 @@ const RegisterPage = () => {
     }
   };
 
+  if (user) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="container mx-auto px-4  h-[90vh] ">
       <div className="flex justify-center w-full flex-col   content-center h-full">

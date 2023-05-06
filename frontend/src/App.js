@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import RegisterPage from "./pages/RegisterPage";
 import StoryDetailsPage from "./pages/StoryDetailsPage";
 import CommentDetailsPage from "./pages/CommentDetailsPage";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -17,15 +18,47 @@ function App() {
         <ToastContainer position="top-center" theme="dark" />
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/my-feed" element={<HomePage />} />
-          <Route path="/my-story" element={<HomePage />} />
-          <Route path="/story/:id" element={<StoryDetailsPage />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/my-feed"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/my-story"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/story/:id"
+            element={
+              <PrivateRoute>
+                <StoryDetailsPage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/story/:storyID/comment/:commentID"
-            element={<CommentDetailsPage />}
+            element={
+              <PrivateRoute>
+                <CommentDetailsPage />
+              </PrivateRoute>
+            }
           />
         </Routes>
         <Footer />

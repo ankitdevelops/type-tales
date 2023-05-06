@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { FaHandPointLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getCommentByID } from "../features/comment/comment.slice";
@@ -12,6 +11,7 @@ const CommentsDetails = () => {
   const { storyID, commentID } = useParams();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { comment } = useSelector((state) => state.comments);
 
   useEffect(() => {
@@ -41,13 +41,15 @@ const CommentsDetails = () => {
       <div className="card w-full bg-base-300 shadow-xl my-4">
         <div className="card-body block">
           <div className="btn-group grid grid-cols-1">
-            <Link
-              to={`/story/${storyID}`}
+            <button
+              onClick={() => {
+                navigate(-1);
+              }}
               className="btn  mb-5 flex items-center"
             >
               <FaHandPointLeft size={26} className="mr-3" />
-              Back To Story
-            </Link>
+              Take me Back
+            </button>
           </div>
           <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
             <article className=" ">

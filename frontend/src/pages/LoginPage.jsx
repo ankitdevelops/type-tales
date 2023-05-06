@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaHouseUser } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../features/auth/authSlice";
 import { toast } from "react-toastify";
@@ -15,7 +15,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoading } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -50,6 +50,10 @@ const LoginPage = () => {
         console.log(error);
       });
   };
+
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="container mx-auto px-4  h-[90vh] ">
