@@ -8,7 +8,7 @@
   <img width="100px" style="margin-right:12px" src="./frontend/src/assets/logo.png" alt="Logo"/>
 
   <p align="center"> 
-    A simple social media website where user can share stories in up to 500 characters.
+    A simple text based social media website where user can share stories in up to 500 characters.
     <br />
     <br/>
     <a href="#">Live Site</a>
@@ -50,7 +50,7 @@
     <img src="./screenshots/screenshot1.jpeg" alt="Logo">
   </a>
 
-A simple social media website where user can share stories in up to 500 characters.
+A simple text based social media website where user can share stories in up to 500 characters.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
