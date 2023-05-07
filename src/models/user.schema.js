@@ -27,6 +27,11 @@ const userSchema = new mongoose.Schema(
       minLength: [9, "Password must be at lest 9 characters"],
       select: false,
     },
+    avatar: {
+      type: String,
+      default:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    },
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },

@@ -103,6 +103,19 @@ const getFollowingFeed = async (token) => {
   }
 };
 
+const uploadProfilePhoto = async (image, token) => {
+  const config = {
+    "Content-Type": "multipart/form-data",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.post(`${API_URL}user/addPhoto`, image, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 const authService = {
   registerUser,
   loginUser,
@@ -112,6 +125,7 @@ const authService = {
   followUser,
   unFollowUser,
   getFollowingFeed,
+  uploadProfilePhoto,
 };
 
 export default authService;

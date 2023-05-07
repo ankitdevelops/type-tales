@@ -48,8 +48,8 @@ const StoryDetails = () => {
                   <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                     <img
                       className="mr-4 w-16 h-16 rounded-full"
-                      src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                      alt="Jese Leos"
+                      src={story?.story.author.avatar}
+                      alt="avatar"
                     />
                     <div>
                       <Link

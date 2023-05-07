@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage";
 import StoryDetailsPage from "./pages/StoryDetailsPage";
 import CommentDetailsPage from "./pages/CommentDetailsPage";
 import PrivateRoute from "./components/PrivateRoute";
+import ImageUpload from "./components/ImageUpload";
 
 function App() {
   return (
@@ -20,6 +21,14 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="/upload"
+            element={
+              <PrivateRoute>
+                <ImageUpload />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/"
             element={

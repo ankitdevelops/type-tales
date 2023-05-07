@@ -3,6 +3,15 @@ import asyncHandler from "../service/asyncHandler.js";
 import CustomError from "../utils/CustomError.js";
 import cookieOptions from "../utils/cookieOptions.js";
 import Story from "../models/story.schema.js";
+import formidable from "formidable";
+import config from "../config/index.js";
+import cloudinary from "cloudinary";
+
+cloudinary.config({
+  cloud_name: config.CLOUDINARY_CLOUD_NAME,
+  api_key: config.CLOUDINARY_API_KEY,
+  api_secret: config.CLOUDINARY_API_SECRET,
+});
 
 /******************************************************
  * @SIGNUP
@@ -62,6 +71,7 @@ export const signUp = asyncHandler(async (req, res) => {
     user: {
       username: user.username,
       name: user.name,
+      avatar: user.avatar,
       joinedDate: user.createdAt,
     },
   });
@@ -104,6 +114,7 @@ export const login = asyncHandler(async (req, res) => {
       user: {
         username: user.username,
         name: user.name,
+        avatar: user.avatar,
         joinedDate: user.createdAt,
       },
     });
@@ -125,7 +136,7 @@ export const listNotFollowingUser = asyncHandler(async (req, res) => {
 
   const nonFollowedUser = await User.find(
     { _id: { $nin: followingUserIDs } },
-    { username: 1, name: 1, _id: 0 }
+    { username: 1, name: 1, _id: 0, avatar: 1 }
   );
 
   res.status(200).json(nonFollowedUser);
@@ -142,7 +153,7 @@ export const listFollowingUsers = asyncHandler(async (req, res) => {
 
   const followedUsers = await User.findById(currentUser._id).populate(
     "following",
-    "username name -_id"
+    "username name avatar -_id"
   );
 
   res.status(200).json(followedUsers.following);
@@ -191,6 +202,7 @@ export const followUser = asyncHandler(async (req, res) => {
     user: {
       username: userToFollow.username,
       name: userToFollow.name,
+      avatar: userToFollow.avatar,
     },
   });
 });
@@ -227,7 +239,7 @@ export const unfollowUser = asyncHandler(async (req, res) => {
   await currentUser.save();
 
   userToUnfollow.followers.push(currentUser._id);
-  userToUnfollow.save();
+  await userToUnfollow.save();
 
   res.status(200).json({
     success: true,
@@ -235,6 +247,7 @@ export const unfollowUser = asyncHandler(async (req, res) => {
     user: {
       username: userToUnfollow.username,
       name: userToUnfollow.name,
+      avatar: userToUnfollow.avatar,
     },
   });
 });
@@ -255,4 +268,35 @@ export const getPostsOfFollowing = asyncHandler(async (req, res) => {
     .populate("author", "username name -_id");
 
   res.status(200).json(stories);
+});
+
+export const addProfilePhoto = asyncHandler(async (req, res) => {
+  const currentUser = req.user;
+  if (!currentUser) {
+    throw new CustomError("Invalid Request", 400);
+  }
+
+  const form = formidable({ multiples: false, keepExtensions: true });
+
+  form.parse(req, async function (err, fields, files) {
+    if (err) {
+      throw new CustomError(err.message || "Something Went wrong", 500);
+    }
+    console.log(files.avatar.filepath);
+    cloudinary.v2.uploader.upload(
+      files.avatar.filepath,
+      { folder: "typetales/avatar" },
+      (error, result) => {
+        if (error) {
+          throw new CustomError("Something went wrong while uploading", 500);
+        }
+        currentUser.avatar = result.secure_url;
+        currentUser.save();
+        res.status(200).json({
+          message: "Profile Picture Uploaded successfully",
+          avatarURL: result.secure_url,
+        });
+      }
+    );
+  });
 });

@@ -26,6 +26,7 @@ export const createStory = asyncHandler(async (req, res) => {
       author: {
         name: newStory.author.name,
         username: newStory.author.username,
+        avatar: newStory.author.avatar,
       },
     },
   });
@@ -39,7 +40,7 @@ export const getAllStory = asyncHandler(async (_req, res) => {
     { isActive: true },
     { story: 1, likes: 1, comments: 1, createdAt: 1, updatedAt: 1 }
   )
-    .populate("author", "username name -_id")
+    .populate("author", "username name avatar -_id")
     .sort({ createdAt: -1 });
 
   if (!stories) {
@@ -57,7 +58,7 @@ export const getUserStory = asyncHandler(async (req, res) => {
   const user = req.user;
   const stories = await Story.find({ author: user._id, isActive: true })
     .select({ story: 1, likes: 1, comments: 1, createdAt: 1, updatedAt: 1 })
-    .populate("author", "username name -_id")
+    .populate("author", "username name avatar -_id")
     .sort({ createdAt: -1 });
 
   if (!stories) {
@@ -112,6 +113,7 @@ export const addComment = asyncHandler(async (req, res) => {
     author: {
       name: author.name,
       username: author.username,
+      avatar: author.avatar,
     },
     createdAt: comment.createdAt,
     updatedAt: comment.updatedAt,
@@ -163,6 +165,7 @@ export const addReply = asyncHandler(async (req, res) => {
     author: {
       name: savedComment.author.name,
       username: savedComment.author.username,
+      avatar: savedComment.author.avatar,
     },
     createdAt: savedComment.createdAt,
     updatedAt: savedComment.updatedAt,
@@ -179,12 +182,12 @@ export const getCommentById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = req.user;
   const comment = await Comment.findById(req.params.id)
-    .populate("author", "name username") // populate the author field with their name
+    .populate("author", "name username avatar") // populate the author field with their name
     .populate({
       path: "comments",
       populate: {
         path: "author",
-        select: "name username",
+        select: "name username avatar -_id",
       },
     });
 

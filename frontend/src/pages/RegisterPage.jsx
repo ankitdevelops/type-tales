@@ -49,7 +49,7 @@ const RegisterPage = () => {
         .then((user) => {
           console.log(user);
           toast.success(`${user.user.name}, Account Created Successfully`);
-          navigate("/");
+          navigate("/upload");
         })
         .catch((error) => toast.error(error));
     }

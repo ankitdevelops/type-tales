@@ -9,7 +9,7 @@ const StoryItem = ({ story }) => {
           <div className="flex items-start ">
             <img
               className="w-12 h-12 rounded-full object-cover mr-4 shadow"
-              src="https://randomuser.me/api/portraits/women/55.jpg"
+              src={story?.author?.avatar}
               alt="avatar"
             />
             <div className="">

@@ -70,6 +70,20 @@ export const followUser = createAsyncThunk(
   }
 );
 
+export const uploadProfilePhoto = createAsyncThunk(
+  "auth/uploadProfilePhoto",
+  async (image, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.uploadProfilePhoto(image, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message || error.toString()
+      );
+    }
+  }
+);
+
 export const unFollowUser = createAsyncThunk(
   "auth/unFollowUser",
   async (username, thunkAPI) => {
@@ -172,6 +186,18 @@ export const authSlice = createSlice({
       .addCase(getFollowingFeed.rejected, (state, action) => {
         state.status = "rejected";
         state.followingFeed = [];
+      })
+      .addCase(uploadProfilePhoto.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.user.user.avatar = action.payload.avatarURL;
+      })
+      .addCase(uploadProfilePhoto.rejected, (state) => {
+        state.status = "rejected";
+        state.user.avatar =
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+      })
+      .addCase(uploadProfilePhoto.pending, (state) => {
+        state.status = "pending";
       });
   },
 });

@@ -38,10 +38,7 @@ const UserItem = ({ user, unFollow, follow }) => {
         <div className="flex">
           <div className="avatar">
             <div className="w-14 h-14 rounded-full">
-              <img
-                src="https://randomuser.me/api/portraits/women/40.jpg"
-                alt="avatar"
-              />
+              <img src={user.avatar} alt="avatar" />
             </div>
           </div>
           <div className="ms-4">
