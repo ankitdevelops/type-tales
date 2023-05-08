@@ -40,6 +40,7 @@ const HomeFeed = () => {
     return (
       <div className="md:col-span-6 overflow-y-auto middle">
         <Tabs />
+        <StoryForm />
         <p className="text-3xl text-center mt-10">No Stories Found</p>
       </div>
     );

@@ -9,7 +9,11 @@ const StoryItem = ({ story }) => {
           <div className="flex items-start ">
             <img
               className="w-12 h-12 rounded-full object-cover mr-4 shadow"
-              src={story?.author?.avatar}
+              src={
+                story?.author?.avatar
+                  ? story?.author?.avatar
+                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              }
               alt="avatar"
             />
             <div className="">

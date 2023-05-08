@@ -31,13 +31,17 @@ const StoryForm = () => {
         <form action="" onSubmit={onSubmit}>
           <textarea
             placeholder="Tell Your Story"
-            className="textarea textarea-bordered  w-full h-40 text-lg resize-none"
+            className="textarea textarea-bordered  w-full h-40 text-lg resize-none border-0"
             value={content}
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
           <div>
-            <button className="btn max-w-xs float-right mt-3" type="submit">
-              Tell Your Story
+            <button
+              className="btn max-w-xs float-right mt-3"
+              type="submit"
+              disabled={content.length >= 500}
+            >
+              Share Now
             </button>
             {length >= 1 && (
               <div

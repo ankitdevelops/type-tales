@@ -35,7 +35,6 @@ export const createStory = asyncHandler(async (req, res) => {
 // Get All Stories
 
 export const getAllStory = asyncHandler(async (_req, res) => {
-  console.log("request received");
   const stories = await Story.find(
     { isActive: true },
     { story: 1, likes: 1, comments: 1, createdAt: 1, updatedAt: 1 }
@@ -129,7 +128,6 @@ export const addComment = asyncHandler(async (req, res) => {
 // Add Reply to comment
 
 export const addReply = asyncHandler(async (req, res) => {
-  console.log("reply request received");
   const { commentID, content } = req.body;
   const user = req.user;
 

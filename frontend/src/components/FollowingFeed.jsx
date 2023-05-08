@@ -9,7 +9,6 @@ const FollowingFeed = () => {
   const dispatch = useDispatch();
   const { followingFeed, status } = useSelector((state) => state.auth);
 
-  console.log(followingFeed);
   useEffect(() => {
     dispatch(getFollowingFeed());
   }, [dispatch]);

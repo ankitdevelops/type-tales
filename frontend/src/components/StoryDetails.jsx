@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Comments from "./Comments";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { getSingleStory, clearStory } from "../features/story/storySlice";
 import MoonLoader from "react-spinners/MoonLoader";
+import { FaHeart } from "react-icons/fa";
 
 const StoryDetails = () => {
+  const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
   const { story } = useSelector((state) => state.stories);
@@ -77,6 +79,21 @@ const StoryDetails = () => {
               </header>
               <p className="lead text-xl break-keep ">{story?.story?.story}</p>
             </article>
+          </div>
+
+          <div className="stats shadow mt-10">
+            <div className="stat">
+              <div className="stat-figure ">
+                <FaHeart
+                  size={32}
+                  role="button"
+                  color={liked ? "red" : ""}
+                  onClick={() => setLiked(!liked)}
+                />
+              </div>
+              <div className="stat-title">Total Likes</div>
+              <div className="stat-value text-primary">25</div>
+            </div>
           </div>
           <Comments id={id} comments={comments} />
         </div>

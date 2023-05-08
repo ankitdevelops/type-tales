@@ -265,7 +265,7 @@ export const getPostsOfFollowing = asyncHandler(async (req, res) => {
     isActive: true,
   })
     .sort("-updatedAt")
-    .populate("author", "username name -_id");
+    .populate("author", "username name avatar -_id");
 
   res.status(200).json(stories);
 });
