@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getFollowingUsers } from "../features/auth/authSlice";
 import UserItem from "./UserItem";
+import { Link } from "react-router-dom";
 const LeftPanel = () => {
   const dispatch = useDispatch();
   const { user, following } = useSelector((state) => state.auth);
@@ -23,9 +24,11 @@ const LeftPanel = () => {
                   </div>
                 </div>
                 <div className="ms-3">
-                  <h6 className="text-lg font-semibold hover:underline hover:underline-offset-2 cursor-pointer">
-                    {user && user.user.name}
-                  </h6>
+                  <Link to={`/user/${user && user.user.username}`}>
+                    <h6 className="text-lg font-semibold hover:underline hover:underline-offset-2 cursor-pointer">
+                      {user && user.user.name}
+                    </h6>
+                  </Link>
                   <p className="text-sm">Full-Stack Developer</p>
                 </div>
               </div>

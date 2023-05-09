@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { followUser, unFollowUser } from "../features/auth/authSlice";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const UserItem = ({ user, unFollow, follow }) => {
   const { status } = useSelector((state) => state.auth);
@@ -33,32 +34,34 @@ const UserItem = ({ user, unFollow, follow }) => {
   };
 
   return (
-    <div className="">
-      <div className="flex justify-between mt-2 ">
-        <div className="flex">
-          <div className="avatar">
-            <div className="w-14 h-14 rounded-full">
-              <img src={user.avatar} alt="avatar" />
-            </div>
+    // <div className="">
+    <div className="flex justify-between mt-2 ">
+      <div className="flex">
+        <div className="avatar">
+          <div className="w-14 h-14 rounded-full">
+            <img src={user.avatar} alt="avatar" />
           </div>
-          <div className="ms-4">
-            <h6 className="text-lg font-semibold hover:underline hover:underline-offset-2 cursor-pointer">
+        </div>
+        <div className="ms-4">
+          <Link to={`/user/${user.username}`}>
+            <h6 className="text-lg font-semibold hover:underline hover:underline-offset-2 ">
               {user.name}
             </h6>
-            <p className="text-sm">@{user.username}</p>
-          </div>
-        </div>
-        <div className="">
-          <button
-            className="btn capitalize"
-            onClick={handelButtonClick}
-            disabled={status === "pending"}
-          >
-            {unFollow ? "Unfollow" : "Follow"}
-          </button>
+          </Link>
+          <p className="text-sm">@{user.username}</p>
         </div>
       </div>
+      <div className="">
+        <button
+          className="btn capitalize"
+          onClick={handelButtonClick}
+          disabled={status === "pending"}
+        >
+          {unFollow ? "Unfollow" : "Follow"}
+        </button>
+      </div>
     </div>
+    // </div>
   );
 };
 

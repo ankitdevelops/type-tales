@@ -3,9 +3,11 @@ import asyncHandler from "../service/asyncHandler.js";
 import CustomError from "../utils/CustomError.js";
 import cookieOptions from "../utils/cookieOptions.js";
 import Story from "../models/story.schema.js";
+import Comment from "../models/comment.schema.js";
 import formidable from "formidable";
 import config from "../config/index.js";
 import cloudinary from "cloudinary";
+import Like from "../models/like.schema.js";
 
 cloudinary.config({
   cloud_name: config.CLOUDINARY_CLOUD_NAME,
@@ -103,7 +105,6 @@ export const login = asyncHandler(async (req, res) => {
   }
 
   const checkPassword = await user.comparePassword(password);
-  console.log(checkPassword);
   if (checkPassword) {
     const token = user.getJwtToken();
     user.password = undefined;
@@ -173,7 +174,6 @@ export const followUser = asyncHandler(async (req, res) => {
   }
 
   const userToFollow = await User.findOne({ username: userToFollowUsername });
-  console.log(userToFollow.username);
   if (!userToFollow) {
     throw new CustomError(
       `User With username ${userToFollowUsername} not found`,
@@ -238,7 +238,7 @@ export const unfollowUser = asyncHandler(async (req, res) => {
   currentUser.following.pull(userToUnfollow._id);
   await currentUser.save();
 
-  userToUnfollow.followers.push(currentUser._id);
+  userToUnfollow.followers.pull(currentUser._id);
   await userToUnfollow.save();
 
   res.status(200).json({
@@ -282,7 +282,6 @@ export const addProfilePhoto = asyncHandler(async (req, res) => {
     if (err) {
       throw new CustomError(err.message || "Something Went wrong", 500);
     }
-    console.log(files.avatar.filepath);
     cloudinary.v2.uploader.upload(
       files.avatar.filepath,
       { folder: "typetales/avatar" },
@@ -299,4 +298,49 @@ export const addProfilePhoto = asyncHandler(async (req, res) => {
       }
     );
   });
+});
+
+export const getUserDetail = asyncHandler(async (req, res) => {
+  const currentUser = req.user;
+  const { username } = req.params;
+
+  if (!username || !username) {
+    throw new CustomError("Invalid User", 400);
+  }
+  const user = await User.findOne(
+    { username }
+    // { name: 1, username: 1, avatar: 1, _id: 0,followers:1 }
+  );
+
+  if (!user) {
+    throw new CustomError("user not found", 400);
+  }
+  const isFollowedBYCurrentUser = user.followers.includes(currentUser._id);
+
+  const stories = await Story.find(
+    { author: user },
+    { story: 1, comments: 1, likesCount: 1 }
+  )
+    .populate("author", "username name avatar -_id")
+    .sort({ createdAt: -1 })
+    .exec();
+
+  const commentCount = await Comment.countDocuments({ author: user }).exec();
+
+  const likesCount = await Like.countDocuments({ user: user }).exec();
+
+  const response = {
+    user: {
+      name: user.name,
+      username: user.username,
+      avatar: user.avatar,
+      following: user.following.length,
+      followers: user.followers.length,
+      totalComments: commentCount,
+      likesCount: likesCount,
+      isFollowedBYCurrentUser: isFollowedBYCurrentUser,
+    },
+    stories,
+  };
+  res.status(200).json(response);
 });

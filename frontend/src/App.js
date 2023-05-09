@@ -11,6 +11,7 @@ import StoryDetailsPage from "./pages/StoryDetailsPage";
 import CommentDetailsPage from "./pages/CommentDetailsPage";
 import PrivateRoute from "./components/PrivateRoute";
 import ImageUpload from "./components/ImageUpload";
+import UserProfilePage from "./pages/UserProfilePage";
 
 function App() {
   return (
@@ -66,6 +67,14 @@ function App() {
             element={
               <PrivateRoute>
                 <CommentDetailsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/user/:username"
+            element={
+              <PrivateRoute>
+                <UserProfilePage />
               </PrivateRoute>
             }
           />

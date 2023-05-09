@@ -8,6 +8,7 @@ const initialState = {
   userToFollow: [],
   status: "",
   followingFeed: [],
+  userProfile: null,
 };
 
 export const registerUser = createAsyncThunk(
@@ -126,12 +127,29 @@ export const getFollowingFeed = createAsyncThunk(
   }
 );
 
+export const getUserProfile = createAsyncThunk(
+  "auth/getUserProfile",
+  async (username, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.getUserProfile(username, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message || error.toString()
+      );
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
       state.user = null;
+    },
+    clearUserProfile: (state) => {
+      state.userProfile = null;
     },
   },
   extraReducers: (builder) => {
@@ -196,8 +214,18 @@ export const authSlice = createSlice({
       })
       .addCase(uploadProfilePhoto.pending, (state) => {
         state.status = "pending";
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.userProfile = action.payload;
+        state.status = "fulfilled";
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
+        state.status = "rejected";
+      })
+      .addCase(getUserProfile.pending, (state, action) => {
+        state.status = "pending";
       });
   },
 });
-
+export const { clearUserProfile } = authSlice.actions;
 export default authSlice.reducer;

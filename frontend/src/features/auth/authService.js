@@ -116,6 +116,19 @@ const uploadProfilePhoto = async (image, token) => {
   }
 };
 
+const getUserProfile = async (username, token) => {
+  const config = {
+    "Content-Type": "multipart/form-data",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(`${API_URL}user/${username}`, config);
+  if (response) {
+    return response.data;
+  }
+};
+
 const authService = {
   registerUser,
   loginUser,
@@ -126,6 +139,7 @@ const authService = {
   unFollowUser,
   getFollowingFeed,
   uploadProfilePhoto,
+  getUserProfile,
 };
 
 export default authService;

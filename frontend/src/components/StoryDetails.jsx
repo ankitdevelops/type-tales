@@ -77,15 +77,15 @@ const StoryDetails = () => {
                     />
                     <div>
                       <Link
-                        to="/user"
+                        to={`/user/${story?.story.author.username}`}
                         rel="author"
-                        className="text-xl font-bold text-gray-900 dark:text-white capitalize"
+                        className="text-xl font-bold text-gray-900 dark:text-white capitalize hover:underline hover:underline-offset-2"
                       >
                         {story?.story.author.name}
                       </Link>
-                      {/* <p className="text-base font-light text-gray-500 dark:text-gray-400">
-                        Graphic Designer, educator &amp; CEO Flowbite
-                      </p> */}
+                      <p className="  text-lg font-light">
+                        @{story?.story.author.username}
+                      </p>
                       {/* <p className="text-base font-light text-gray-500 dark:text-gray-400">
                         <time
                           pubdate=""

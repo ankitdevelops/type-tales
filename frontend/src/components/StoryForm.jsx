@@ -30,7 +30,7 @@ const StoryForm = () => {
       <div className="card-body">
         <form action="" onSubmit={onSubmit}>
           <textarea
-            placeholder="Tell Your Story"
+            placeholder="What's on Your Mind?"
             className="textarea textarea-bordered  w-full h-40 text-lg resize-none border-0"
             value={content}
             onChange={(e) => setContent(e.target.value)}

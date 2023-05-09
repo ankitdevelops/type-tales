@@ -262,3 +262,11 @@ export const handleLike = asyncHandler(async (req, res) => {
     }
   }
 });
+
+// controller to get top five post with highest number of likes and comment.
+export const getTopFiveStories = asyncHandler(async (req, res) => {
+  const topStories = await Story.find({ isActive: true }, { _id: 1, story: 1 })
+    .sort({ likesCount: -1, comments: -1 })
+    .limit(5);
+  res.status(200).json(topStories);
+});
