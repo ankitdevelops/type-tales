@@ -15,10 +15,10 @@ const StoryForm = () => {
     e.preventDefault();
     dispatch(createStory(content))
       .unwrap()
-      .then(() => {
+      .then((story) => {
         setContent("");
-        navigate(`/`);
-        toast.success("Post Created Successfully");
+        navigate(`/story/${story.newStory._id}`);
+        toast.success(story.message);
       })
       .catch((error) => {
         console.log("Error", error);
