@@ -3,6 +3,7 @@ import asyncHandler from "../service/asyncHandler.js";
 import CustomError from "../utils/CustomError.js";
 import Comment from "../models/comment.schema.js";
 import User from "../models/user.schema.js";
+import Like from "../models/like.schema.js";
 // Create Story
 
 export const createStory = asyncHandler(async (req, res) => {
@@ -36,7 +37,14 @@ export const createStory = asyncHandler(async (req, res) => {
 export const getAllStory = asyncHandler(async (_req, res) => {
   const stories = await Story.find(
     { isActive: true },
-    { story: 1, likes: 1, comments: 1, createdAt: 1, updatedAt: 1 }
+    {
+      story: 1,
+      likes: 1,
+      comments: 1,
+      createdAt: 1,
+      updatedAt: 1,
+      likesCount: 1,
+    }
   )
     .populate("author", "username name avatar -_id")
     .sort({ createdAt: -1 });
@@ -72,18 +80,31 @@ export const getUserStory = asyncHandler(async (req, res) => {
 // Get Single Story
 
 export const getStoryDetails = asyncHandler(async (req, res) => {
+  const currentUser = req.user;
   const { id: storyId } = req.params;
   const story = await Story.findById(storyId)
-    .populate("author", "-_id")
+    .populate("author", "name username avatar -_id")
     .where({ isActive: true });
 
   if (!story) {
     throw new CustomError("No Story Found", 404);
   }
+  const haveUserLiked = await Like.findOne({
+    user: currentUser._id,
+    story: storyId,
+  });
+  let likeByCurrentUser;
+  if (haveUserLiked) {
+    likeByCurrentUser = true;
+  }
+  if (!haveUserLiked) {
+    likeByCurrentUser = false;
+  }
 
   res.status(200).json({
     success: true,
     story,
+    likeByCurrentUser,
   });
 });
 
@@ -192,4 +213,52 @@ export const getCommentById = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "Comment not found" });
   }
   return res.status(200).json(comment);
+});
+
+// controller to handle Like
+export const handleLike = asyncHandler(async (req, res) => {
+  const currentUser = req.user;
+  const { storyID } = req.body;
+  const currentUserID = currentUser._id;
+
+  if (!currentUser || !storyID) {
+    throw new CustomError("Invalid Request", 400);
+  }
+
+  const story = await Story.findById(storyID);
+
+  if (!story) {
+    throw new Story("Story does not exists.", 500);
+  }
+
+  //   checking if user already liked the story, if true then unlike it
+
+  const haveUserLiked = await Like.findOne({
+    user: currentUserID,
+    story: storyID,
+  });
+
+  if (haveUserLiked) {
+    await Like.findByIdAndDelete(haveUserLiked._id);
+    if (story.likesCount > 0) {
+      story.likesCount--;
+      await story.save();
+    }
+    res.status(200).json({
+      message: "Story Unliked successfully",
+      likesCount: story.likesCount,
+    });
+  }
+  // if user has not liked the story, then like it.
+  if (!haveUserLiked) {
+    const newLike = await Like.create({ user: currentUserID, story: storyID });
+    if (newLike) {
+      story.likesCount++;
+      await story.save();
+      res.status(200).json({
+        message: "Story Liked Successfully",
+        likesCount: story.likesCount,
+      });
+    }
+  }
 });

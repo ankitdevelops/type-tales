@@ -35,6 +35,7 @@ export const handleLike = asyncHandler(async (req, res) => {
     }
     res.status(200).json({
       message: "Story Unliked successfully",
+      likesCount: story.likesCount,
     });
   }
   // if user has not liked the story, then like it.
@@ -43,7 +44,10 @@ export const handleLike = asyncHandler(async (req, res) => {
     if (newLike) {
       story.likesCount++;
       await story.save();
-      res.status(200).json({ message: "Story Liked Successfully" });
+      res.status(200).json({
+        message: "Story Liked Successfully",
+        likesCount: story.likesCount,
+      });
     }
   }
 });

@@ -8,6 +8,7 @@ import {
   addReply,
   // getStoryComments,
   getCommentById,
+  handleLike,
 } from "../controllers/story.controller.js";
 import { isLoggedIn } from "../middleware/auth.middleware.js";
 
@@ -20,5 +21,6 @@ router.get("/comment/:id", isLoggedIn, getCommentById);
 router.post("/create", isLoggedIn, createStory);
 router.post("/addComment", isLoggedIn, addComment);
 router.post("/comment/addReply", isLoggedIn, addReply);
+router.post("/handleLike", isLoggedIn, handleLike);
 
 export default router;

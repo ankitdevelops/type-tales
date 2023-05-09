@@ -7,6 +7,6 @@ const router = Router();
 
 router.use("/auth", authRoutes);
 router.use("/story", storyRoutes);
-router.use("/story/like", likeRoutes);
+// router.use("/story/like", likeRoutes);
 
 export default router;

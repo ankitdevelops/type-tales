@@ -66,12 +66,24 @@ const createComment = async (token, data) => {
   return response.data;
 };
 
+const likeStory = async (token, data) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.post(`${API_URL}handleLike`, data, config);
+  if (response.data) {
+    return response.data;
+  }
+};
 const storyService = {
   createStory,
   getAllStory,
   getSingleStory,
   getMyStory,
   createComment,
+  likeStory,
 };
 
 export default storyService;

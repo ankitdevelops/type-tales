@@ -31,7 +31,7 @@ const StoryItem = ({ story }) => {
             <div className="mt-4 flex items-center">
               <div className="flex   text-sm mr-3">
                 <FaHeart size={20} color="red" />
-                <span className="ml-2">{story?.likes?.length}</span>
+                <span className="ml-2">{story.likesCount}</span>
               </div>
               <div className="flex  text-sm mr-3">
                 <FaRegComment size={20} />

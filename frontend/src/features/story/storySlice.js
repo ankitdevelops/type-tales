@@ -70,8 +70,21 @@ export const createComment = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      console.log(data);
       return await storyService.createComment(token, data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message || error.toString()
+      );
+    }
+  }
+);
+
+export const likeStory = createAsyncThunk(
+  "like/likeStory",
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await storyService.likeStory(token, data);
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message || error.toString()
@@ -158,6 +171,17 @@ export const storySlice = createSlice({
       })
       .addCase(createComment.rejected, (state, action) => {
         state.status = "rejected";
+      })
+      .addCase(likeStory.fulfilled, (state, action) => {
+        state.story.story.likesCount = action.payload.likesCount;
+        state.story.likeByCurrentUser = !state.story.likeByCurrentUser;
+        state.status = "fulfilled";
+      })
+      .addCase(likeStory.rejected, (state) => {
+        state.status = "rejected";
+      })
+      .addCase(likeStory.pending, (state) => {
+        state.status = "pending";
       });
   },
 });
