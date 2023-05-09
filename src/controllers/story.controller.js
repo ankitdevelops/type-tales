@@ -1,7 +1,6 @@
 import Story from "../models/story.schema.js";
 import asyncHandler from "../service/asyncHandler.js";
 import CustomError from "../utils/CustomError.js";
-import Stroy from "../models/story.schema.js";
 import Comment from "../models/comment.schema.js";
 import User from "../models/user.schema.js";
 // Create Story
