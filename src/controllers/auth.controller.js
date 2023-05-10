@@ -324,6 +324,10 @@ export const getUserDetail = asyncHandler(async (req, res) => {
     .populate("author", "username name avatar -_id")
     .sort({ createdAt: -1 })
     .exec();
+  const replies = await Comment.find({ author: user })
+    .populate("author", "username name avatar -_id")
+    .sort({ createdAt: -1 })
+    .exec();
 
   const commentCount = await Comment.countDocuments({ author: user }).exec();
 
@@ -341,6 +345,7 @@ export const getUserDetail = asyncHandler(async (req, res) => {
       isFollowedBYCurrentUser: isFollowedBYCurrentUser,
     },
     stories,
+    replies,
   };
   res.status(200).json(response);
 });

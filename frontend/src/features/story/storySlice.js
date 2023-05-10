@@ -6,6 +6,7 @@ const initialState = {
   newStory: null,
   story: null,
   status: "",
+  trendingStories: [],
 };
 
 export const createStory = createAsyncThunk(
@@ -93,6 +94,20 @@ export const likeStory = createAsyncThunk(
   }
 );
 
+export const getTrendingStories = createAsyncThunk(
+  "story/getTrendingStories",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await storyService.getTrendingStories(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message || error.toString()
+      );
+    }
+  }
+);
+
 export const storySlice = createSlice({
   name: "story",
   initialState,
@@ -116,15 +131,11 @@ export const storySlice = createSlice({
       })
       .addCase(createStory.pending, (state) => {
         state.status = "pending";
-
         state.newStory = null;
-        // state.story = ;
       })
       .addCase(createStory.rejected, (state) => {
         state.status = "rejected";
-
         state.newStory = null;
-        // state.story = null;
       })
       .addCase(getAllStory.fulfilled, (state, action) => {
         state.status = "fulfilled";
@@ -181,6 +192,16 @@ export const storySlice = createSlice({
         state.status = "rejected";
       })
       .addCase(likeStory.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(getTrendingStories.fulfilled, (state, action) => {
+        state.trendingStories = action.payload;
+        state.status = "fulfilled";
+      })
+      .addCase(getTrendingStories.rejected, (state) => {
+        state.status = "rejected";
+      })
+      .addCase(getTrendingStories.pending, (state) => {
         state.status = "pending";
       });
   },

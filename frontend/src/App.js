@@ -78,6 +78,22 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/user/:username/stories"
+            element={
+              <PrivateRoute>
+                <UserProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/user/:username/replies"
+            element={
+              <PrivateRoute>
+                <UserProfilePage />
+              </PrivateRoute>
+            }
+          />
         </Routes>
         <Footer />
       </BrowserRouter>

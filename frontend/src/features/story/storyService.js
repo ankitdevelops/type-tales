@@ -77,6 +77,18 @@ const likeStory = async (token, data) => {
     return response.data;
   }
 };
+
+const getTrendingStories = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(`${API_URL}trending`, config);
+  return response.data;
+};
+
 const storyService = {
   createStory,
   getAllStory,
@@ -84,6 +96,7 @@ const storyService = {
   getMyStory,
   createComment,
   likeStory,
+  getTrendingStories,
 };
 
 export default storyService;

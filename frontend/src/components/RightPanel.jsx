@@ -2,14 +2,19 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserToFollow } from "../features/auth/authSlice";
+import { getTrendingStories } from "../features/story/storySlice";
 import UserItem from "./UserItem";
 const RightPanel = () => {
   const { userToFollow } = useSelector((state) => state.auth);
-  const { stories } = useSelector((state) => state.stories);
+  const { trendingStories } = useSelector((state) => state.stories);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUserToFollow());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getTrendingStories());
   }, [dispatch]);
 
   return (
@@ -17,9 +22,9 @@ const RightPanel = () => {
       <div className="card w-full bg-base-300 shadow-xl ">
         <div className="card-body ">
           <h3 className="text-xl font-semibold mb-4 ">Trending Story</h3>
-          {stories &&
-            stories.slice(0, 5).map((story, index) => (
-              <Link key={index}>
+          {trendingStories &&
+            trendingStories.slice(0, 5).map((story, index) => (
+              <Link key={index} to={`/story/${story._id}`}>
                 <p
                   className={
                     index !== 4

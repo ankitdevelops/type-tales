@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   getUserProfile,
   clearUserProfile,
@@ -9,10 +10,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import StoryList from "./StoryList";
+import UserReplies from "./UserReplies";
+import CommentList from "./CommentList";
 
 const UserProfile = () => {
   const [buttonText, setButtonText] = useState("");
   const dispatch = useDispatch();
+  const location = useLocation();
   const { username } = useParams();
 
   const { userProfile } = useSelector((state) => state.auth);
@@ -54,7 +58,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="card w-full bg-base-300 shadow-xl my-4  ">
+    <div className="card w-full bg-base-200 shadow-xl my-4  ">
       <div className="card-body block">
         <div className="profile">
           <div className="flex justify-between mt-2 items-center ">
@@ -120,11 +124,39 @@ const UserProfile = () => {
             </div>
           </div>
         </section>
+        <div className="tabs  my-2">
+          <Link
+            className={
+              location.pathname === `/user/${username}/stories` ||
+              location.pathname === `/user/${username}`
+                ? "tab tab-bordered text-lg tab-active font-semibold"
+                : "tab tab-bordered"
+            }
+            to={`/user/${username}/stories`}
+          >
+            Stories
+          </Link>
 
+          <Link
+            className={
+              location.pathname === `/user/${username}/replies`
+                ? "tab tab-bordered text-lg tab-active font-semibold"
+                : "tab tab-bordered"
+            }
+            to={`/user/${username}/replies`}
+          >
+            Replies
+          </Link>
+        </div>
         {/* stories */}
         <h3 className="text-xl font-semibold my-4 ">My Stories</h3>
-
-        <StoryList stories={userProfile && userProfile?.stories} />
+        {location.pathname === `/user/${username}/stories` ? (
+          <StoryList stories={userProfile && userProfile?.stories} />
+        ) : location.pathname === `/user/${username}/replies` ? (
+          <CommentList comments={userProfile?.replies} />
+        ) : (
+          <StoryList stories={userProfile && userProfile?.stories} />
+        )}
       </div>
     </div>
   );
