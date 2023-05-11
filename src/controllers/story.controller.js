@@ -270,3 +270,50 @@ export const getTopFiveStories = asyncHandler(async (req, res) => {
     .limit(5);
   res.status(200).json(topStories);
 });
+
+// delete story
+export const deleteStory = asyncHandler(async (req, res) => {
+  const { storyID } = req.params;
+  const currentUser = req.user;
+
+  // Check if the story exists
+  const story = await Story.findById({ _id: storyID });
+  if (!story) {
+    return res.status(404).json({ message: "Story not found" });
+  }
+
+  // Check if the authenticated user is the author of the story
+  if (String(story.author._id) !== String(currentUser._id)) {
+    return res
+      .status(403)
+      .json({ message: "You don't have permission to delete this story." });
+  }
+
+  // Delete the story
+  await Story.findByIdAndDelete({ _id: storyID });
+  return res.status(200).json({ message: "Story deleted successfully" });
+});
+
+// controller to delete replies.
+
+export const deleteReply = asyncHandler(async (req, res) => {
+  const { replyID } = req.params;
+  const currentUser = req.user;
+
+  // Check if the story exists
+  const reply = await Comment.findById({ _id: replyID });
+  if (!reply) {
+    return res.status(404).json({ message: "Reply not found" });
+  }
+
+  // Check if the authenticated user is the author of the story
+  if (String(reply.author._id) !== String(currentUser._id)) {
+    return res
+      .status(403)
+      .json({ message: "You don't have permission to delete this reply." });
+  }
+
+  // Delete the story
+  await Comment.findByIdAndDelete({ _id: replyID });
+  return res.status(200).json({ message: "Reply deleted successfully" });
+});

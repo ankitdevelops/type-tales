@@ -149,7 +149,7 @@ const UserProfile = () => {
           </Link>
         </div>
         {/* stories */}
-        <h3 className="text-xl font-semibold my-4 ">My Stories</h3>
+
         {location.pathname === `/user/${username}/stories` ? (
           <StoryList stories={userProfile && userProfile?.stories} />
         ) : location.pathname === `/user/${username}/replies` ? (

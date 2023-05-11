@@ -89,6 +89,16 @@ const getTrendingStories = async (token) => {
   return response.data;
 };
 
+const deleteStory = async (storyID, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.delete(`${API_URL}delete/${storyID}`, config);
+  return response.data;
+};
+
 const storyService = {
   createStory,
   getAllStory,
@@ -97,6 +107,7 @@ const storyService = {
   createComment,
   likeStory,
   getTrendingStories,
+  deleteStory,
 };
 
 export default storyService;

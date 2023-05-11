@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Comments from "./Comments";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import {
   getSingleStory,
   clearStory,
   likeStory,
+  deleteStory,
 } from "../features/story/storySlice";
 import MoonLoader from "react-spinners/MoonLoader";
 import { FaHeart } from "react-icons/fa";
@@ -14,8 +15,10 @@ import { FaHeart } from "react-icons/fa";
 const StoryDetails = () => {
   const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { story } = useSelector((state) => state.stories);
+  const { user } = useSelector((state) => state.auth);
   const comments = story?.story?.comments;
 
   useEffect(() => {
@@ -49,6 +52,19 @@ const StoryDetails = () => {
       });
   };
 
+  const handleDelete = () => {
+    dispatch(deleteStory(story?.story?._id))
+      .unwrap()
+      .then((data) => {
+        toast.success(data.message);
+        navigate(-1);
+      })
+      .catch((error) => {
+        toast.error(error);
+        console.log(error);
+      });
+  };
+
   if (!story) {
     return (
       <div className="md:col-span-6 mt-5 middle mx-auto">
@@ -68,7 +84,7 @@ const StoryDetails = () => {
           <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
             <article className=" ">
               <header className="mb-4  ">
-                <address className="flex items-center mb-6 not-italic">
+                <address className="flex items-center justify-between mb-6 not-italic ">
                   <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                     <img
                       className="mr-4 w-16 h-16 rounded-full"
@@ -101,6 +117,11 @@ const StoryDetails = () => {
               </header>
               <p className="lead text-xl break-keep ">{story?.story?.story}</p>
             </article>
+            {user && user?.user.username === story?.story.author.username && (
+              <button className="btn float-none" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
           </div>
 
           <div className="stats shadow mt-10">
