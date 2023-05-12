@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Comments from "./Comments";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,10 +15,10 @@ import { FaHeart } from "react-icons/fa";
 const StoryDetails = () => {
   const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { id } = useParams();
   const { story } = useSelector((state) => state.stories);
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
   const comments = story?.story?.comments;
 
   useEffect(() => {

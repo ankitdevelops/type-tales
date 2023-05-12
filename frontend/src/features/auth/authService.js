@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:5000/api/v1/auth/";
+const API_URL = "https://type-tales.up.railway.app/api/v1/auth/";
 
 // Register User
 
