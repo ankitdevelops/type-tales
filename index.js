@@ -16,7 +16,7 @@ import config from "./src/config/index.js";
     };
     app.listen(config.PORT, onListening);
   } catch (error) {
-    console.log("Connection Error", err);
+    console.log("Connection Error", error);
     throw error;
   }
 })();

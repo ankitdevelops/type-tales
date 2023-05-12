@@ -108,19 +108,19 @@ export const getTrendingStories = createAsyncThunk(
   }
 );
 
-export const deleteStory = createAsyncThunk(
-  "story/deleteStory",
-  async (storyID, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await storyService.deleteStory(storyID, token);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || error.message || error.toString()
-      );
-    }
-  }
-);
+// export const deleteStory = createAsyncThunk(
+//   "story/deleteStory",
+//   async (storyID, thunkAPI) => {
+//     try {
+//       const token = thunkAPI.getState().auth.user.token;
+//       return await storyService.deleteStory(storyID, token);
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(
+//         error.response?.data?.message || error.message || error.toString()
+//       );
+//     }
+//   }
+// );
 
 export const storySlice = createSlice({
   name: "story",
@@ -217,17 +217,17 @@ export const storySlice = createSlice({
       })
       .addCase(getTrendingStories.pending, (state) => {
         state.status = "pending";
-      })
-      .addCase(deleteStory.fulfilled, (state) => {
-        state.status = "fulfilled";
-        state.story = null;
-      })
-      .addCase(deleteStory.pending, (state) => {
-        state.status = "pending";
-      })
-      .addCase(deleteStory.rejected, (state) => {
-        state.status = "rejected";
       });
+    // .addCase(deleteStory.fulfilled, (state) => {
+    //   state.status = "fulfilled";
+    //   state.story = null;
+    // })
+    // .addCase(deleteStory.pending, (state) => {
+    //   state.status = "pending";
+    // })
+    // .addCase(deleteStory.rejected, (state) => {
+    //   state.status = "rejected";
+    // });
   },
 });
 export const { clearStory, clearStories, clearNewStory } = storySlice.actions;

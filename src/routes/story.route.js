@@ -10,8 +10,8 @@ import {
   getCommentById,
   handleLike,
   getTopFiveStories,
-  deleteStory,
-  deleteReply,
+  // deleteStory,
+  // deleteReply,
 } from "../controllers/story.controller.js";
 import { isLoggedIn } from "../middleware/auth.middleware.js";
 
@@ -28,7 +28,7 @@ router.post("/addComment", isLoggedIn, addComment);
 router.post("/comment/addReply", isLoggedIn, addReply);
 router.post("/handleLike", isLoggedIn, handleLike);
 
-router.delete("/delete/:storyID", isLoggedIn, deleteStory);
-router.delete("/reply/delete/:replyID", isLoggedIn, deleteReply);
+// router.delete("/delete/:storyID", isLoggedIn, deleteStory);
+// router.delete("/reply/delete/:replyID", isLoggedIn, deleteReply);
 
 export default router;

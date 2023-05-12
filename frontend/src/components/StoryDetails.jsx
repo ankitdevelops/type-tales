@@ -7,7 +7,7 @@ import {
   getSingleStory,
   clearStory,
   likeStory,
-  deleteStory,
+  // deleteStory,
 } from "../features/story/storySlice";
 import MoonLoader from "react-spinners/MoonLoader";
 import { FaHeart } from "react-icons/fa";
@@ -52,18 +52,18 @@ const StoryDetails = () => {
       });
   };
 
-  const handleDelete = () => {
-    dispatch(deleteStory(story?.story?._id))
-      .unwrap()
-      .then((data) => {
-        toast.success(data.message);
-        navigate(-1);
-      })
-      .catch((error) => {
-        toast.error(error);
-        console.log(error);
-      });
-  };
+  // const handleDelete = () => {
+  //   dispatch(deleteStory(story?.story?._id))
+  //     .unwrap()
+  //     .then((data) => {
+  //       toast.success(data.message);
+  //       navigate(-1);
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error);
+  //       console.log(error);
+  //     });
+  // };
 
   if (!story) {
     return (
@@ -117,11 +117,11 @@ const StoryDetails = () => {
               </header>
               <p className="lead text-xl break-keep ">{story?.story?.story}</p>
             </article>
-            {user && user?.user.username === story?.story.author.username && (
+            {/* {user && user?.user.username === story?.story.author.username && (
               <button className="btn float-none" onClick={handleDelete}>
                 Delete
               </button>
-            )}
+            )} */}
           </div>
 
           <div className="stats shadow mt-10">
