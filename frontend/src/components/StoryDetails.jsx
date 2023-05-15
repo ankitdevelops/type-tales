@@ -88,7 +88,11 @@ const StoryDetails = () => {
                   <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                     <img
                       className="mr-4 w-16 h-16 rounded-full"
-                      src={story?.story.author.avatar}
+                      src={
+                        story?.story.author.avatar
+                          ? story?.story.author.avatar
+                          : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                      }
                       alt="avatar"
                     />
                     <div>

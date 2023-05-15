@@ -147,6 +147,11 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
+      state.following = [];
+      state.followingFeed = [];
+      state.userToFollow = [];
+      state.status = "";
+      state.userProfile = null;
     },
     clearUserProfile: (state) => {
       state.userProfile = null;

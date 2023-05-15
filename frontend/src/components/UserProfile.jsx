@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import StoryList from "./StoryList";
-import UserReplies from "./UserReplies";
+
 import CommentList from "./CommentList";
 import Tabs from "./Tabs";
 
@@ -68,7 +68,14 @@ const UserProfile = () => {
               <div className="flex items-center">
                 <div className="avatar">
                   <div className="w-32 h-32 rounded-full">
-                    <img src={userProfile?.user.avatar} alt="user-img" />
+                    <img
+                      src={
+                        userProfile?.user.avatar
+                          ? userProfile?.user.avatar
+                          : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                      }
+                      alt="user-img"
+                    />
                   </div>
                 </div>
                 <div className="ms-4">

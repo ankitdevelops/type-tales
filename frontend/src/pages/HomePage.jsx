@@ -7,6 +7,7 @@ import FollowingFeed from "../components/FollowingFeed";
 import MyStroy from "../components/MyStroy";
 import Following from "../components/Following";
 import ExplorePeople from "../components/ExplorePeople";
+import Trending from "../components/Trending";
 
 const HomePage = () => {
   const location = useLocation();
@@ -24,6 +25,8 @@ const HomePage = () => {
               <Following />
             ) : location.pathname === "/who-to-follow" ? (
               <ExplorePeople />
+            ) : location.pathname === "/trending" ? (
+              <Trending />
             ) : (
               <HomeFeed />
             )}

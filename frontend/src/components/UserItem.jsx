@@ -39,7 +39,14 @@ const UserItem = ({ user, unFollow, follow }) => {
       <div className="flex">
         <div className="avatar">
           <div className="w-14 h-14 rounded-full">
-            <img src={user.avatar} alt="avatar" />
+            <img
+              src={
+                user.avatar
+                  ? user?.avatar
+                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              }
+              alt="avatar"
+            />
           </div>
         </div>
         <div className="ms-4">

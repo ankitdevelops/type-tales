@@ -20,7 +20,14 @@ const LeftPanel = () => {
               <div className="flex">
                 <div className="avatar">
                   <div className="w-14 rounded-full">
-                    <img src={user?.user?.avatar} alt="avatar" />
+                    <img
+                      src={
+                        user?.user?.avatar
+                          ? user?.user?.avatar
+                          : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                      }
+                      alt="avatar"
+                    />
                   </div>
                 </div>
                 <div className="ms-3">

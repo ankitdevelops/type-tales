@@ -63,6 +63,14 @@ function App() {
             }
           />
           <Route
+            path="/trending"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/my-story"
             element={
               <PrivateRoute>
