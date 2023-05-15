@@ -39,6 +39,22 @@ function App() {
             }
           />
           <Route
+            path="/following"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/who-to-follow"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/my-feed"
             element={
               <PrivateRoute>

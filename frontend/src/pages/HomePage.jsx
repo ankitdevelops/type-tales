@@ -5,6 +5,8 @@ import RightPanel from "../components/RightPanel";
 import { useLocation } from "react-router-dom";
 import FollowingFeed from "../components/FollowingFeed";
 import MyStroy from "../components/MyStroy";
+import Following from "../components/Following";
+import ExplorePeople from "../components/ExplorePeople";
 
 const HomePage = () => {
   const location = useLocation();
@@ -18,6 +20,10 @@ const HomePage = () => {
               <FollowingFeed />
             ) : location.pathname === "/my-story" ? (
               <MyStroy />
+            ) : location.pathname === "/following" ? (
+              <Following />
+            ) : location.pathname === "/who-to-follow" ? (
+              <ExplorePeople />
             ) : (
               <HomeFeed />
             )}

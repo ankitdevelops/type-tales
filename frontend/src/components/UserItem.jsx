@@ -35,7 +35,7 @@ const UserItem = ({ user, unFollow, follow }) => {
 
   return (
     // <div className="">
-    <div className="flex justify-between mt-2 ">
+    <div className="flex justify-between mt-3 ">
       <div className="flex">
         <div className="avatar">
           <div className="w-14 h-14 rounded-full">

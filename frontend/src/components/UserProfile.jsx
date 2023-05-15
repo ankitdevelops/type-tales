@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import StoryList from "./StoryList";
 import UserReplies from "./UserReplies";
 import CommentList from "./CommentList";
+import Tabs from "./Tabs";
 
 const UserProfile = () => {
   const [buttonText, setButtonText] = useState("");
@@ -58,107 +59,110 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="card w-full bg-base-200 shadow-xl my-4  ">
-      <div className="card-body block">
-        <div className="profile">
-          <div className="flex justify-between mt-2 items-center ">
-            <div className="flex items-center">
-              <div className="avatar">
-                <div className="w-32 h-32 rounded-full">
-                  <img src={userProfile?.user.avatar} alt="user-img" />
+    <>
+      <Tabs />
+      <div className="card w-full bg-base-200 shadow-xl my-4  ">
+        <div className="card-body block">
+          <div className="profile">
+            <div className="flex justify-between mt-2 items-center ">
+              <div className="flex items-center">
+                <div className="avatar">
+                  <div className="w-32 h-32 rounded-full">
+                    <img src={userProfile?.user.avatar} alt="user-img" />
+                  </div>
+                </div>
+                <div className="ms-4">
+                  <h6 className="text-2xl font-semibold  ">
+                    {userProfile?.user.name}
+                  </h6>
+                  <p className="text-xl">@{userProfile?.user.username}</p>
                 </div>
               </div>
-              <div className="ms-4">
-                <h6 className="text-2xl font-semibold  ">
-                  {userProfile?.user.name}
-                </h6>
-                <p className="text-xl">@{userProfile?.user.username}</p>
-              </div>
-            </div>
 
-            {userProfile && userProfile.user.isFollowedBYCurrentUser ? (
-              <button className="btn capitalize" onClick={unFollowUserBtn}>
-                {buttonText ? `${buttonText}` : "unfollow"}
-              </button>
-            ) : (
-              <button className="btn capitalize" onClick={followUserBtn}>
-                {buttonText ? `${buttonText}` : "follow"}
-              </button>
-            )}
-          </div>
-        </div>
-        {/* stats */}
-        <section className="text-center overflow-x-auto">
-          <div className="stats shadow mt-5 flex-wrap stats-horizontal ">
-            <div className="stat">
-              <div className="stat-value text-primary">
-                {userProfile?.stories.length}
-              </div>
-              <div className="stat-title">Stories Created</div>
-            </div>
-
-            <div className="stat">
-              <div className="stat-value text-primary ">
-                {userProfile?.user.totalComments}
-              </div>
-              <div className="stat-title">Comments Posted</div>
-            </div>
-
-            <div className="stat">
-              <div className="stat-value text-primary">
-                {userProfile?.user.likesCount}
-              </div>
-              <div className="stat-title">Story Liked</div>
-            </div>
-            <div className="stat">
-              <div className="stat-value text-primary">
-                {userProfile?.user.followers}
-              </div>
-              <div className="stat-title">Followers</div>
-            </div>
-            <div className="stat">
-              <div className="stat-value text-primary">
-                {userProfile?.user.following}
-              </div>
-              <div className="stat-title">Following</div>
+              {userProfile && userProfile.user.isFollowedBYCurrentUser ? (
+                <button className="btn capitalize" onClick={unFollowUserBtn}>
+                  {buttonText ? `${buttonText}` : "unfollow"}
+                </button>
+              ) : (
+                <button className="btn capitalize" onClick={followUserBtn}>
+                  {buttonText ? `${buttonText}` : "follow"}
+                </button>
+              )}
             </div>
           </div>
-        </section>
-        <div className="tabs  my-2">
-          <Link
-            className={
-              location.pathname === `/user/${username}/stories` ||
-              location.pathname === `/user/${username}`
-                ? "tab tab-bordered text-lg tab-active font-semibold"
-                : "tab tab-bordered"
-            }
-            to={`/user/${username}/stories`}
-          >
-            Stories
-          </Link>
+          {/* stats */}
+          <section className="text-center overflow-x-auto">
+            <div className="stats shadow mt-5 flex-wrap stats-horizontal ">
+              <div className="stat">
+                <div className="stat-value text-primary">
+                  {userProfile?.stories.length}
+                </div>
+                <div className="stat-title">Stories Created</div>
+              </div>
 
-          <Link
-            className={
-              location.pathname === `/user/${username}/replies`
-                ? "tab tab-bordered text-lg tab-active font-semibold"
-                : "tab tab-bordered"
-            }
-            to={`/user/${username}/replies`}
-          >
-            Replies
-          </Link>
+              <div className="stat">
+                <div className="stat-value text-primary ">
+                  {userProfile?.user.totalComments}
+                </div>
+                <div className="stat-title">Comments Posted</div>
+              </div>
+
+              <div className="stat">
+                <div className="stat-value text-primary">
+                  {userProfile?.user.likesCount}
+                </div>
+                <div className="stat-title">Story Liked</div>
+              </div>
+              <div className="stat">
+                <div className="stat-value text-primary">
+                  {userProfile?.user.followers}
+                </div>
+                <div className="stat-title">Followers</div>
+              </div>
+              <div className="stat">
+                <div className="stat-value text-primary">
+                  {userProfile?.user.following}
+                </div>
+                <div className="stat-title">Following</div>
+              </div>
+            </div>
+          </section>
+          <div className="tabs  my-2">
+            <Link
+              className={
+                location.pathname === `/user/${username}/stories` ||
+                location.pathname === `/user/${username}`
+                  ? "tab tab-bordered text-lg tab-active font-semibold"
+                  : "tab tab-bordered"
+              }
+              to={`/user/${username}/stories`}
+            >
+              Stories
+            </Link>
+
+            <Link
+              className={
+                location.pathname === `/user/${username}/replies`
+                  ? "tab tab-bordered text-lg tab-active font-semibold"
+                  : "tab tab-bordered"
+              }
+              to={`/user/${username}/replies`}
+            >
+              Replies
+            </Link>
+          </div>
+          {/* stories */}
+
+          {location.pathname === `/user/${username}/stories` ? (
+            <StoryList stories={userProfile && userProfile?.stories} />
+          ) : location.pathname === `/user/${username}/replies` ? (
+            <CommentList comments={userProfile?.replies} />
+          ) : (
+            <StoryList stories={userProfile && userProfile?.stories} />
+          )}
         </div>
-        {/* stories */}
-
-        {location.pathname === `/user/${username}/stories` ? (
-          <StoryList stories={userProfile && userProfile?.stories} />
-        ) : location.pathname === `/user/${username}/replies` ? (
-          <CommentList comments={userProfile?.replies} />
-        ) : (
-          <StoryList stories={userProfile && userProfile?.stories} />
-        )}
       </div>
-    </div>
+    </>
   );
 };
 
