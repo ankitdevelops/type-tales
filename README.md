@@ -8,7 +8,7 @@
   <img width="100px" style="margin-right:12px" src="./frontend/src/assets/logo.png" alt="Logo"/>
 
   <p align="center"> 
-    A simple text based social media website where user can share stories in up to 500 characters.
+   A simple text based, micro blogging  website where user can share stories in up to 500 characters.
     <br />
     <br/>
     <a href="#">Live Site</a>
@@ -47,10 +47,10 @@
 ## About The Project
 
  <a href="#">
-    <img src="./screenshots/screenshot1.jpeg" alt="Logo">
+    <img src="./screenshots/Web%20capture_15-5-2023_22585_type-tales.vercel.app.jpeg\" alt="Logo">
   </a>
 
-A simple text based social media website where user can share stories in up to 500 characters.
+A simple text based, micro blogging  website where user can share stories in up to 500 characters.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -86,13 +86,30 @@ You need `NodeJs`  installed on your machine.
 
 ### Installation
 
- Clone the repo
-   ```sh
-   git clone https://github.com/ankitdevelops/type-tales.git
-   ```
+- Clone the repo
+```sh
+git clone https://github.com/ankitdevelops/type-tales.git
+```
 
+- In the type_tales root folder install the backend packages using command
+```sh
+  npm install
+```
+- create a `.env` file and and add the following environment variable.
+```sh
+PORT=<port>
+MONGODB_URL=<db url>
+JWT_SECRET=<very secure jwt secret>
+JWT_EXPIRY=<jwt expiry day>
+CLOUDINARY_CLOUD_NAME=<cloudinary cloud name>
+CLOUDINARY_API_KEY=<key>
+CLOUDINARY_API_SECRET=<secret key>
+```
+- `cd` to frontend and install the required packages using command `npm install`.
+- run the application using command `npm dev` or can check the package.json file for more command.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 ## License
@@ -107,9 +124,8 @@ Distributed under the MIT License. See `LICENSE.md` for more information.
 
 Ankit Kumar - [@linkedin/helloankit](https://www.linkedin.com/in/helloankit/)
 
-Project Link: [https://django-devblogs.vercel.app/](https://django-devblogs.vercel.app/)
+Live Project Link: [https://type-tales.vercel.app/](https://type-tales.vercel.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 

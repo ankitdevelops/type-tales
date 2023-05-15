@@ -59,7 +59,7 @@ const RegisterPage = () => {
     return <Navigate to="/" />;
   }
   return (
-    <div className="container mx-auto px-4  h-[90vh] ">
+    <div className="container mx-auto px-4  h-[90vh] flex flex-col min-h-screen">
       <div className="flex justify-center w-full flex-col   content-center h-full">
         <div className="card ">
           <div className="card w-full md:w-1/2 bg-base-300 shadow-xl mx-auto">

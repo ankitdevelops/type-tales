@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema(
   {
-    content: { type: String, required: true },
+    content: {
+      type: String,
+      required: true,
+      maxLength: [250, "Maximum 250 character allowed"],
+    },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
