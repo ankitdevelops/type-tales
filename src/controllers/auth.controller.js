@@ -57,7 +57,7 @@ export const signUp = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
-    username,
+    username: username.toLowerCase(),
     password,
   });
 
