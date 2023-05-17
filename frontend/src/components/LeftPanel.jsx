@@ -10,7 +10,20 @@ const LeftPanel = () => {
   useEffect(() => {
     dispatch(getFollowingUsers());
   }, [dispatch]);
-
+  const monthNameList = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   return (
     <div className="md:col-span-3 hidden md:block  max-h-screen sticky top-5">
       {user && (
@@ -36,7 +49,14 @@ const LeftPanel = () => {
                       {user && user.user.name}
                     </h6>
                   </Link>
-                  <p className="text-sm">Full-Stack Developer</p>
+                  <p className="text-sm">
+                    Joined{" "}
+                    {`${
+                      monthNameList[new Date(user?.user.joinedDate).getMonth()]
+                    }, ${new Date(user?.user.joinedDate).getDate()}, ${new Date(
+                      user?.user.joinedDate
+                    ).getFullYear()}`}
+                  </p>
                 </div>
               </div>
             </div>

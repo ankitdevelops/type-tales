@@ -23,7 +23,6 @@ const StoryItem = ({ story }) => {
                 </h2>
                 {/* <small className="text-sm ">22h ago</small> */}
               </div>
-              <p className="">Joined 12 SEP 2012. </p>
             </div>
           </div>
           <div>

@@ -25,30 +25,6 @@ const CommentItem = ({ comment, storyID }) => {
               </time>
             </p>
           </div>
-          <div className="dropdown dropdown-bottom dropdown-end">
-            <label tabIndex={0} className=" m-1" role="button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block w-5 h-5 stroke-current"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-                ></path>
-              </svg>
-            </label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu p-2 shadow bg-base-300 rounded-box w-52"
-            >
-              <li>Item 1</li>
-              <li>Item 2</li>
-            </ul>
-          </div>
         </footer>
         <p className="text-gray-500 dark:text-gray-400">{comment?.content}</p>
         <div className="flex items-center mt-4 space-x-4">

@@ -47,7 +47,7 @@ const CommentForm = ({ storyID, isReply, commentID }) => {
           toast.success("Comment Created Successfully");
         })
         .catch((error) => {
-          console.log("Error", error);
+          toast.error(error.errors.content.message);
         });
     }
   };
@@ -62,7 +62,7 @@ const CommentForm = ({ storyID, isReply, commentID }) => {
           <textarea
             id="comment"
             rows={6}
-            className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+            className="px-0 w-full text-lg text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
             placeholder="Write a comment..."
             required=""
             // defaultValue={""}
@@ -70,7 +70,7 @@ const CommentForm = ({ storyID, isReply, commentID }) => {
             onChange={(e) => setContent(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn">
+        <button type="submit" className="btn" disabled={content.length > 250}>
           Post comment
         </button>
       </form>
