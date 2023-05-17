@@ -70,7 +70,7 @@ const Tabs = () => {
       </Link>
       <Link
         className={
-          location.pathname === `trending`
+          location.pathname === `/trending`
             ? "tab tab-bordered text-lg tab-active font-semibold"
             : "tab tab-bordered"
         }
