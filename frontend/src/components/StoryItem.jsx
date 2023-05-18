@@ -18,11 +18,12 @@ const StoryItem = ({ story }) => {
             />
             <div className="">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold capitalize">
+                <h2 className="text-xl font-semibold capitalize">
                   {story?.author?.name}
                 </h2>
-                {/* <small className="text-sm ">22h ago</small> */}
+                
               </div>
+              <p className="text-sm ">@{story?.author.username}</p>
             </div>
           </div>
           <div>
