@@ -129,3 +129,7 @@ Live Project Link: [https://type-tales.vercel.app/](https://type-tales.vercel.ap
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+```
+email: ankit@gmail.com
+password: testing321
+```
